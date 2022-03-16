@@ -29,6 +29,7 @@ public class CommandParserExecute implements CommandParser {
     //REGEX here
 
     public static final String CHOOSE_CLASS_REGEX = "[1-3]";
+    public static final String QUIT_REGEX = "quit";
 
     /**
      * check the input with the regex and throws Exception if it does not match
@@ -77,5 +78,10 @@ public class CommandParserExecute implements CommandParser {
     public RunaClass parseClass(String input) throws CharacterClassException {
         if (!input.matches(CHOOSE_CLASS_REGEX)) throw new CharacterClassException();
         return RunaClass.getClassByIndex(Integer.parseInt(input));
+    }
+
+    @Override
+    public boolean checkQuitParser(String input) {
+        return input.matches(QUIT_REGEX);
     }
 }

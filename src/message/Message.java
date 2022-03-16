@@ -10,5 +10,6 @@ public final class Message {
     public static final String ENTER_MULTIPLE_NUMBER = "Enter numbers [1--<n>] separated by comma:";
     public static final String ENTER_ROLL = "Enter dice roll [1--<d>]:";
     public static final String ENTER_SEEDS = "Enter seeds [1--2147483647] separated by comma:";
+    public static final String SHUFFLE_MESSAGE = "To shuffle ability cards and monsters, enter two seeds";
 
 }

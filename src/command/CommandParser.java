@@ -27,4 +27,6 @@ public interface CommandParser {
     Pair<String, List<String>> parseCommand(String input) throws SyntaxException;
 
     RunaClass parseClass(String input) throws CharacterClassException;
+
+    boolean checkQuitParser(String input);
 }

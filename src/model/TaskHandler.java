@@ -26,11 +26,13 @@ public class TaskHandler {
     private final Runa runa;
     private final CommandParserExecute parser;
     private Queue<Monster> monster;
+    private GameLevel gameLevel;
 
     public TaskHandler(Input input, Output output, CommandParserExecute parser) {
         this.input = input;
         this.output = output;
         this.parser = parser;
+        this.gameLevel = new GameLevel(1, 1);
         this.runa = new Runa(initialize());
         this.monster = new ArrayDeque<>();
     }
@@ -38,7 +40,7 @@ public class TaskHandler {
 
     private RunaClass initialize() {
         output.output(Message.WELCOME_MESSAGE);
-        RunaClass runaClass = null;
+        RunaClass runaClass;
         output.output(Message.ENTER_NUMBER);
         do {
             try {
@@ -50,8 +52,23 @@ public class TaskHandler {
         return runaClass;
     }
 
-    private void shuffleCards() {
+    public boolean shuffleCards() {
 
+        output.output(Message.SHUFFLE_MESSAGE);
+        output.output(Message.ENTER_SEEDS);
+        Pair<Integer, Integer> seeds;
+        do {
+            var userInput = input.read();
+            if (parser.checkQuitParser(userInput)) return false;
+            try {
+                seeds = parser.parseSeeds(userInput);
+            } catch (CharacterClassException e){
+                output.output(Message.ENTER_SEEDS);
+            }
+        }while(seeds = null);
+        
+
+        return true;
     }
 
 }
