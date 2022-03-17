@@ -1,7 +1,15 @@
 
-œ
-java:S11865"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(´â×ıÿÿÿÿ
+V
+java:S1854@"9Remove this useless assignment to local variable "seeds".(¶õÒÊ8ëÛóÌù/
+V
+java:S1854D"9Remove this useless assignment to local variable "seeds".(¢ı”®8ëÛóÌù/
+L
+java:S1481;"*Remove this unused "seeds" local variable.(¼¾‰çıÿÿÿÿ8îÛóÌù/
 A
 java:S1068"+Remove this unused "monster" private field.(ÍÙĞÉ
-L
-java:S11445"1Remove this unused private "shuffleCards" method.(´â×ıÿÿÿÿ
+O
+java:S1068"-Remove this unused "gameLevel" private field.(§úÑ¾øÿÿÿÿ8ğÛóÌù/
+K
+java:S1121D".Extract the assignment out of this expression.(¢ı”®8ñÛóÌù/
+[
+java:S35167"9Refactor this method to not always return the same value.(¿Ÿ»çøÿÿÿÿ8‘ÜóÌù/

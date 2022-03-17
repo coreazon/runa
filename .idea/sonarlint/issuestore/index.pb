@@ -9,12 +9,6 @@ B
 src/core/Pair.java,5\1\518a3f7fe907b0f51299f54edc7a541a6ea2b5b0
 D
 src/Application.java,a\b\ab19de43ce2200890aa1e718c4ce7acd5733fec0
-X
-(src/model/entities/mobs/BossMonster.java,7\4\74f942c51ec220e426661ed88e255aaf95f063b7
-T
-$src/model/entities/mobs/Monster.java,9\8\9801aaf043354549e1a3dfd9311e25ec44bfc24a
-T
-$src/model/entities/HealthPoints.java,a\0\a086b996569a67ad535a67f94626f5abfee0d32b
 U
 %src/model/entitie/runa/Abilities.java,3\2\32df2f30d01cda8ab8ffca9e48763550ae952c9f
 H
@@ -35,23 +29,25 @@ H
 src/message/Message.java,f\3\f30008b86fc642600257ee470c99fcbe39ab32c9
 U
 %src/model/entitie/runa/RunaClass.java,a\2\a222bc4be89e9456adca7a51b6476c4de4581864
-F
-src/errors/Errors.java,f\e\fec922d1096b6e2945c6430bd0eaa49501d176dd
+W
+'src/errors/CharacterClassException.java,7\f\7fc415f84aba1169235de6db141f4954cdf6853d
+N
+src/command/CommandParser.java,3\b\3ba777eeda728171c22d84579324ebbcbfc938df
+U
+%src/command/CommandParserExecute.java,5\a\5a07e4743e8f2dbbb7d817b774c9124f1f25194f
 I
 src/command/Commands.java,1\4\1421f4ebbb160279899954bdeef31398e28eefbc
-O
-src/errors/SyntaxException.java,0\7\072d0529cb39f2c38dfacae5103e46d224c9fce3
+F
+src/errors/Errors.java,f\e\fec922d1096b6e2945c6430bd0eaa49501d176dd
 R
 "src/errors/SemanticsException.java,1\e\1eb344d8619f694fa125a17732c28a32b31abb1e
 @
 src/Session.java,e\e\ee54e8c5bf23e75f353a453480932c05c3171927
-J
-src/model/TaskHandler.java,4\7\473408ecc67ad40cd75ecd3826af83fba0cd0dfb
-W
-'src/errors/CharacterClassException.java,7\f\7fc415f84aba1169235de6db141f4954cdf6853d
+O
+src/errors/SyntaxException.java,0\7\072d0529cb39f2c38dfacae5103e46d224c9fce3
 M
 src/errors/TaskException.java,8\c\8c3f6332a8891f10c7db9482480b21b6a7ad5e10
-U
-%src/command/CommandParserExecute.java,5\a\5a07e4743e8f2dbbb7d817b774c9124f1f25194f
-N
-src/command/CommandParser.java,3\b\3ba777eeda728171c22d84579324ebbcbfc938df
+J
+src/model/TaskHandler.java,4\7\473408ecc67ad40cd75ecd3826af83fba0cd0dfb
+K
+src/model/entitie/mobs/Type,f\b\fbade6869d32ecd7a65f6a1d0982fbba159a6594
