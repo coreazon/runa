@@ -3,14 +3,21 @@ package model;
 import command.CommandParserExecute;
 import core.Input;
 import core.Output;
+import core.Pair;
 import errors.CharacterClassException;
+import errors.SeedNotFoundException;
 import message.Message;
 import model.entitie.mobs.Mobs;
+import model.entitie.runa.Abilities;
 import model.entitie.runa.Runa;
 import model.entitie.runa.RunaClass;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 /**
  * This class models a task handler for the given task.
@@ -40,7 +47,7 @@ public class TaskHandler {
 
     private RunaClass initialize() {
         output.output(Message.WELCOME_MESSAGE);
-        RunaClass runaClass;
+        RunaClass runaClass = null;
         output.output(Message.ENTER_NUMBER);
         do {
             try {
@@ -56,16 +63,16 @@ public class TaskHandler {
 
         output.output(Message.SHUFFLE_MESSAGE);
         output.output(Message.ENTER_SEEDS);
-        Pair<Integer, Integer> seeds;
+        Pair<Integer, Integer> seeds = null;
         do {
             var userInput = input.read();
             if (parser.checkQuitParser(userInput)) return false;
             try {
                 seeds = parser.parseSeeds(userInput);
-            } catch (CharacterClassException e){
+            } catch (SeedNotFoundException e){
                 output.output(Message.ENTER_SEEDS);
             }
-        }while(seeds = null);
+        }while(seeds == null);
         
         var mobsList = Mobs.getMobsFromGameLevel(gameLevel.getGameLevel());
         var abilities = Abilities.getAllAbilities();
@@ -73,8 +80,9 @@ public class TaskHandler {
         Collections.shuffle(abilities, new Random(seeds.getFirstElement()));
         Collections.shuffle(mobsList, new Random(seeds.getSecondElement()));
 
-        this.monster = mobsList;
-        
+        this.monster = new LinkedList<>(mobsList);
+        runa.setAbilities(new ArrayList<>(abilities));
+
         return true;
     }
 

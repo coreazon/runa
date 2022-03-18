@@ -7,7 +7,6 @@ import core.Pair;
 import errors.Errors;
 import errors.SyntaxException;
 import model.TaskHandler;
-import model.logic.ApollonHandler;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class Session {
         this.output = output;
         this.errorOutput = errorOutput;
         this.input = input;
-        this.taskHandler = new TaskHandler();
+        this.taskHandler = new TaskHandler(input, output, commandParserExecute);
         this.commandParserExecute = commandParserExecute;
     }
 

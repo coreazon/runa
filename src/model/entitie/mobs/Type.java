@@ -1,3 +1,4 @@
+package model.entitie.mobs;
 public enum Type {
 	
 	WATER,

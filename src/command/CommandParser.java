@@ -2,6 +2,7 @@ package command;
 
 import core.Pair;
 import errors.CharacterClassException;
+import errors.SeedNotFoundException;
 import errors.SyntaxException;
 import model.entitie.runa.RunaClass;
 
@@ -30,5 +31,5 @@ public interface CommandParser {
 
     boolean checkQuitParser(String input);
 
-    Pair<Integer, Integer> parseSeeds(String input);
+    Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException;
 }

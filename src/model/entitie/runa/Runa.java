@@ -12,7 +12,7 @@ public class Runa {
     private static final int STARTING_DICE = 4;
     private final RunaClass classOfRuna;
     private final HealthPoints healthPoints;
-    private final ArrayList<Abilities> abilities;
+    private ArrayList<Abilities> abilities;
     private final Dice dice;
     private final FocusPoints focusPoints;
 
@@ -24,4 +24,7 @@ public class Runa {
         this.focusPoints = new FocusPoints(this.dice.getSides());
     }
 
+    public void setAbilities(ArrayList<Abilities> abilities) {
+        this.abilities = abilities;
+    }
 }

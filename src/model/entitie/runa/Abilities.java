@@ -1,5 +1,10 @@
 package model.entitie.runa;
 
+import model.entitie.FocusPoints;
+
+import java.util.Arrays;
+import java.util.List;
+
 public enum Abilities {
 
     SLASH("Slash", AbilityType.PHYSICAL, new FocusPoints(0)),

@@ -3,6 +3,7 @@ package command;
 import core.Pair;
 import errors.CharacterClassException;
 import errors.Errors;
+import errors.SeedNotFoundException;
 import errors.SyntaxException;
 import model.entitie.runa.RunaClass;
 
@@ -88,9 +89,9 @@ public class CommandParserExecute implements CommandParser {
         return input.matches(QUIT_REGEX);
     }
 
-    public Pair<Integer, Integer> parseSeeds(String input) {
-        if (!input.matches(REGEX_SEEDS)) return null;
+    public Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException {
+        if (!input.matches(REGEX_SEEDS)) throw new SeedNotFoundException();
         var seeds = input.split(SEED_SEPARATOR);
-        return new Pair<Integer, Integer>(seeds[0], seeds[1]);
+        return new Pair<>(Integer.parseInt(seeds[0]), Integer.parseInt(seeds[1]));
     }
 }

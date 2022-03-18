@@ -1,5 +1,7 @@
 package model.entitie.mobs;
 
+import model.entitie.HealthPoints;
+
 public enum BossMobs {
 
     SPIDER_KING("Spider King", 1, new HealthPoints(50), Type.LIGHTNING),

@@ -1,5 +1,10 @@
 package model.entitie.mobs;
 
+import model.entitie.HealthPoints;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Mobs {
 
     FROG("Frog", 1, new HealthPoints(16)),
