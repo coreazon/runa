@@ -5,6 +5,7 @@ import model.entitie.FocusPoints;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Abilities {
 
@@ -46,8 +47,6 @@ public enum Abilities {
 
     public static List<Abilities> getAllAbilitiesForRuna(RunaClass runaClass) {
 
-        var list = Arrays.asList(Abilities.values());
-        list.removeIf(ability -> runaClass.getAbilities().contains(ability));
-        return list;
+        return Arrays.stream(Abilities.values()).filter(ability -> !runaClass.getAbilities().contains(ability)).collect(Collectors.toList());
     }
 }
