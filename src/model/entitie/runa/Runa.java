@@ -5,6 +5,7 @@ import model.entitie.FocusPoints;
 import model.entitie.HealthPoints;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Runa {
 
@@ -20,11 +21,15 @@ public class Runa {
         this.healthPoints = new HealthPoints(STARTING_HEALTH);
         this.classOfRuna = classOfRuna;
         this.dice = new Dice(STARTING_DICE);
-        this.abilities = (ArrayList<Abilities>) this.classOfRuna.getAbilities();
+        this.abilities = new ArrayList<>();
         this.focusPoints = new FocusPoints(this.dice.getSides());
     }
 
-    public void setAbilities(ArrayList<Abilities> abilities) {
-        this.abilities = abilities;
+    public void setAbilities(List<Abilities> abilities) {
+        this.abilities = (ArrayList<Abilities>) abilities;
+    }
+
+    public RunaClass getClassOfRuna() {
+        return classOfRuna;
     }
 }

@@ -2,6 +2,7 @@ package model.entitie.runa;
 
 import model.entitie.FocusPoints;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,7 +42,12 @@ public enum Abilities {
         return representation;
     }
 
-    public static List<Abilities> getAllAbilities() {
-        return Arrays.asList(Abilities.values());
+
+
+    public static List<Abilities> getAllAbilitiesForRuna(RunaClass runaClass) {
+
+        var list = Arrays.asList(Abilities.values());
+        list.removeIf(ability -> runaClass.getAbilities().contains(ability));
+        return list;
     }
 }

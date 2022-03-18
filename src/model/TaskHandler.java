@@ -75,7 +75,7 @@ public class TaskHandler {
         }while(seeds == null);
         
         var mobsList = Mobs.getMobsFromGameLevel(gameLevel.getGameLevel());
-        var abilities = Abilities.getAllAbilities();
+        var abilities = Abilities.getAllAbilitiesForRuna(runa.getClassOfRuna());
 
         Collections.shuffle(abilities, new Random(seeds.getFirstElement()));
         Collections.shuffle(mobsList, new Random(seeds.getSecondElement()));
