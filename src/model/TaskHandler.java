@@ -86,4 +86,48 @@ public class TaskHandler {
         return true;
     }
 
+    public boolean fight() {
+        //first runa
+
+        //fp of mobs
+
+        //every mob
+
+        //fp of runa
+
+        return true;
+    }
+
+    private void newCards() {
+
+    }
+
+    private void newDice() {
+
+    }
+
+    private void upgrade() {
+
+    }
+
+    private void healing() {
+
+    }
+
+    private void lost() {
+
+    }
+
+    private void won() {
+
+    }
+
+    private void nextLevel() {
+
+    }
+
+    private void nextRoom() {
+
+    }
+
 }
