@@ -5,7 +5,7 @@ import core.Input;
 import core.Output;
 import errors.CharacterClassException;
 import message.Message;
-import model.entitie.mobs.Monster;
+import model.entitie.mobs.Mobs;
 import model.entitie.runa.Runa;
 import model.entitie.runa.RunaClass;
 
@@ -25,7 +25,7 @@ public class TaskHandler {
     private final Output output;
     private final Runa runa;
     private final CommandParserExecute parser;
-    private Queue<Monster> monster;
+    private Queue<Mobs> monster;
     private GameLevel gameLevel;
 
     public TaskHandler(Input input, Output output, CommandParserExecute parser) {
@@ -67,7 +67,14 @@ public class TaskHandler {
             }
         }while(seeds = null);
         
+        var mobsList = Mobs.getMobsFromGameLevel(gameLevel.getGameLevel());
+        var abilities = Abilities.getAllAbilities();
 
+        Collections.shuffle(abilities, new Random(seeds.getFirstElement()));
+        Collections.shuffle(mobsList, new Random(seeds.getSecondElement()));
+
+        this.monster = mobsList;
+        
         return true;
     }
 

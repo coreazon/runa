@@ -24,11 +24,14 @@ public class CommandParserExecute implements CommandParser {
     public static final String SPACE = " ";
     public static final String EMPTY_STRING = "";
     public static final char SPACE_CHAR = ' ';
+    public static final String SEED_SEPARATOR = ",";
 
 
     //REGEX here
 
     public static final String CHOOSE_CLASS_REGEX = "[1-3]";
+    public static final String SEED = "";
+    public static final String REGEX_SEEDS = "SEED,SEED";
     public static final String QUIT_REGEX = "quit";
 
     /**
@@ -83,5 +86,11 @@ public class CommandParserExecute implements CommandParser {
     @Override
     public boolean checkQuitParser(String input) {
         return input.matches(QUIT_REGEX);
+    }
+
+    public Pair<Integer, Integer> parseSeeds(String input) {
+        if (!input.matches(REGEX_SEEDS)) return null;
+        var seeds = input.split(SEED_SEPARATOR);
+        return new Pair<Integer, Integer>(seeds[0], seeds[1]);
     }
 }
