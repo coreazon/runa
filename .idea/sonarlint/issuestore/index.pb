@@ -11,3 +11,35 @@ H
 src/model/dice/Dice.java,d\c\dcf80b81b6f4476926fe556e9111b6f81998d5e6
 H
 src/message/Message.java,f\3\f30008b86fc642600257ee470c99fcbe39ab32c9
+I
+src/command/Commands.java,1\4\1421f4ebbb160279899954bdeef31398e28eefbc
+F
+src/errors/Errors.java,f\e\fec922d1096b6e2945c6430bd0eaa49501d176dd
+R
+"src/errors/SemanticsException.java,1\e\1eb344d8619f694fa125a17732c28a32b31abb1e
+O
+src/errors/SyntaxException.java,0\7\072d0529cb39f2c38dfacae5103e46d224c9fce3
+M
+src/errors/TaskException.java,8\c\8c3f6332a8891f10c7db9482480b21b6a7ad5e10
+W
+'src/errors/CharacterClassException.java,7\f\7fc415f84aba1169235de6db141f4954cdf6853d
+U
+%src/errors/SeedNotFoundException.java,5\6\56327088c8e00b96c49438649dcfab13527e4075
+N
+src/command/CommandParser.java,3\b\3ba777eeda728171c22d84579324ebbcbfc938df
+U
+%src/command/CommandParserExecute.java,5\a\5a07e4743e8f2dbbb7d817b774c9124f1f25194f
+T
+$src/model/entitie/mobs/BossMobs.java,f\7\f7244e81b2e8acafc72b6f7e2778a25df460e17b
+W
+'src/model/entitie/mobs/BossMonster.java,f\8\f89be932c6651a92089c7b73cb550a3475c3481f
+P
+ src/model/entitie/mobs/Mobs.java,8\b\8b92e7276dc11ceb0197fcc8071c2768bfd59ede
+S
+#src/model/entitie/mobs/Monster.java,3\5\35e604ce0563504d7f488f383028c2078e89df38
+X
+(src/model/entitie/mobs/MonsterCards.java,f\2\f203c7d7c20093cfe85d12efc3ae93c76d78a1b1
+P
+ src/model/entitie/mobs/Type.java,d\6\d68eb16233f7c14abc8543013782df2998c02a6e
+W
+'src/model/entitie/runa/AbilityType.java,1\a\1af99e485244151624e0a9db34bf1606e5566b74
