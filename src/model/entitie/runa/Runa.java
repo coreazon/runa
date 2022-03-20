@@ -32,4 +32,12 @@ public class Runa {
     public RunaClass getClassOfRuna() {
         return classOfRuna;
     }
+
+    @Override
+    public String toString() {
+        return String.format(Message.RUNA_TOSTRING, 
+            healthPoints.getHealthpoints(), 
+            focusPoints.getFocuspoints(),
+            dice.getSides());
+    }
 }

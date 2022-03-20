@@ -32,7 +32,7 @@ public class TaskHandler {
     private final Output output;
     private final Runa runa;
     private final CommandParserExecute parser;
-    private Queue<Mobs> monster;
+    private Queue<Mobs> monsters;
     private GameLevel gameLevel;
 
     public TaskHandler(Input input, Output output, CommandParserExecute parser) {
@@ -41,19 +41,19 @@ public class TaskHandler {
         this.parser = parser;
         this.gameLevel = new GameLevel(1, 1);
         this.runa = new Runa(initialize());
-        this.monster = new ArrayDeque<>();
+        this.monsters = new ArrayDeque<>();
     }
 
 
     private RunaClass initialize() {
         output.output(Message.WELCOME_MESSAGE);
         RunaClass runaClass = null;
-        output.output(Message.ENTER_NUMBER);
+        output.output(String.format(Message.ENTER_NUMBER, RunaClass.values().length));
         do {
             try {
                 runaClass = parser.parseClass(input.read());
             } catch (CharacterClassException e){
-                output.output(Message.ENTER_NUMBER);
+                output.output(String.format(Message.ENTER_NUMBER, RunaClass.values().length));
             }
         }while(runaClass ==  null);
         return runaClass;
@@ -80,22 +80,55 @@ public class TaskHandler {
         Collections.shuffle(abilities, new Random(seeds.getFirstElement()));
         Collections.shuffle(mobsList, new Random(seeds.getSecondElement()));
 
-        this.monster = new LinkedList<>(mobsList);
+        this.monsters = new LinkedList<>(mobsList);
         runa.setAbilities(new ArrayList<>(abilities));
 
         return true;
     }
 
     public boolean fight() {
-        //first runa
+        var inLevel = true;
+        var newStage = true;
+        while(inLevel) {
+            if (newStage){
+                output.output(String.format(Message.ENTER_STAGE, gameLevel.getRoom(), gameLevel.getLevel()));
+                newStage = false;
+            }
+            output.output(getBattleInfortmation());
 
-        //fp of mobs
+            //first runa
+            inLevel = runaTurn();
+                //check if won
 
-        //every mob
+            //fp of runa
 
-        //fp of runa
+            //every mob
 
+                //check if lost
+
+            //fp of mobs
+
+        }
         return true;
+    }
+
+    private boolean runaTurn() {
+        //first need attack from user
+        output.output(String.format(Message.RUNA_CARDS, runa.getCardsInfo()));
+        output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
+        int card = null;
+        do {
+            var userInput = input.read();
+            if (parser.checkQuitParser(userInput)) return false;
+            try {
+                card = parser.parseNumber(userInput);
+            } catch ( e){
+                output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
+            }
+        }while(card == null);
+
+        //optional need monster to attack
+        
     }
 
     private void newCards() {
@@ -115,19 +148,35 @@ public class TaskHandler {
     }
 
     private void lost() {
-
+        if (runa.getHealthpoints().getHealthpoints() <= 0) throw new ;
     }
 
     private void won() {
 
     }
-
+    /**
+     * update the gamelevel to the next level
+     * @throws 
+     */
     private void nextLevel() {
-
+        //check if won game
+        if (gameLevel.getLevel() == 2) throw new ;
+        gameLevel.setGameLevel(gameLevel.getLevel() + 1);
     }
 
+    /**
+     * update the gameroom to the next room or back to room 1 if it was the boss room
+     */
     private void nextRoom() {
-
+        if (gameLevel.getGameRoom() == 4) gameLevel.setGameRoom(1);
+        else gameLevel.setGameRoom(gameLevel.getGameRoom() + 1);
     }
+
+    private String getBattleInfortmation() [
+        var outputBuilder = new StringBuilder();
+        monsters.forEach(monster -> outputBuilder.append(monster.toString()).append(System.lineSeparator()));
+        outputBuilder.deleteCharAt(outputBuilder.length() - 1);
+        return String.format(Message.BATTLE_INFO, runa.toString(), outputBuilder.toString());
+    ]
 
 }
