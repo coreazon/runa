@@ -220,7 +220,7 @@ public class TaskHandler {
         if (runa.getHealthPoints().getHealthPoints() == 50 || runa.getAbilities().size() == 1) return;
         if (runa.getAbilities().size() == 2) {
             int heal;
-                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()))
+                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
             do {
                 output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
@@ -234,7 +234,7 @@ public class TaskHandler {
         else {
             //TODO: this is not right but the idea kinda da same
             int heal;
-                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()))
+                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
             do {
                 output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
