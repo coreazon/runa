@@ -1,0 +1,48 @@
+Fight():
+
+loop solange im selben level
+	
+	nachricht schicken mit info in welchen raum und level	
+
+	loop solange im selben Raum
+		
+		nachricht schicken mit info über runa und monster
+		input von user
+		checken ob mehr als ein gegnerisches Monster : ziel aussuchen 
+		runa greift an 
+			-> checken ob Monster defensive fähigkeit 
+			-> checken ob gewonnen
+				-> break;
+		checken ob monster focus benützt hat
+		for: jeden Monster angriff
+			-> checken ob Runa verloren hat : vorbei
+		checken ob runa focus benützt hat
+
+	loop ende
+	
+	checken ob Level == 2 und Raum == 4 : spiel gewonnen und vorbei
+	
+	input user reward cheken
+	
+	checken ob heilung möchlich : optional : heilen	
+
+	checken ob Raum ==4 : break;
+
+loop ende
+
+
+Reward():
+
+checken ob Raum <4: input user :
+	-> neue karte
+	-> neuer würfel
+else karten upgrade
+
+
+Heilung():
+
+checken ob weniger als 50 hp 
+	checken ob genau 2 Karten: nachricht um eine karte zu wählen und +10 hp && nicht mehr als 50 hp
+	wenn mehr : für jede +10 und nicht mehr als 50hp
+
+
