@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * This class models a task handler for the given task.
@@ -130,6 +131,21 @@ public class TaskHandler {
 
         nextLevel();
         return true;
+    }
+
+    private void focusPointsTurnRuna() {
+        if (runa.getFocusCard() == null) return;
+        var focusPoints = runa.getFocusCard().getLevel().getNumber();
+        runa.getFocusPoints().setFocusPoints(focusPoints);
+        runa.setFocusCard(null);
+    }
+
+    private void focusPointsTurnMonster(List<Monster> monstersInRoom) {
+        monstersInRoom.stream().filter(monster -> monster.getFocusCard() != null)
+                .collect(Collectors.toList()).forEach(monster -> {
+                    monster.getFocusPoints().setFocusPoints(monster.getFocusCard().getLevel().getNumber());
+                    monster.setFocusCard(null);
+        });
     }
 
     private List<Monster> getMobsForRoom() {

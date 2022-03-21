@@ -21,6 +21,7 @@ public class Runa {
     private ArrayList<Ability> abilities;
     private final Dice dice;
     private final FocusPoints focusPoints;
+    private Ability focusCard;
 
     public Runa(RunaClass classOfRuna) {
         this.healthPoints = new HealthPoints(STARTING_HEALTH);
@@ -28,6 +29,23 @@ public class Runa {
         this.dice = new Dice(STARTING_DICE);
         this.abilities = new ArrayList<>();
         this.focusPoints = new FocusPoints(this.dice.getSides());
+        this.focusCard = null;
+    }
+
+    public Ability getFocusCard() {
+        return focusCard;
+    }
+
+    public Dice getDice() {
+        return dice;
+    }
+
+    public FocusPoints getFocusPoints() {
+        return focusPoints;
+    }
+
+    public void setFocusCard(Ability focusCard) {
+        this.focusCard = focusCard;
     }
 
     public List<Ability> getAbilities() {
