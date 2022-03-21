@@ -2,6 +2,8 @@ package model.entitie.runa;
 
 import model.entitie.Score;
 
+import java.util.Objects;
+
 public class Ability {
 
     private final Abilities ability;
@@ -18,5 +20,18 @@ public class Ability {
 
     public Abilities getAbility() {
         return ability;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ability ability1 = (Ability) o;
+        return ability == ability1.ability && Objects.equals(level, ability1.level);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ability, level);
     }
 }

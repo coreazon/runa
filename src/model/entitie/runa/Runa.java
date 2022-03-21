@@ -6,6 +6,7 @@ import model.entitie.FocusPoints;
 import model.entitie.HealthPoints;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Runa {
@@ -14,6 +15,7 @@ public class Runa {
     private static final int STARTING_DICE = 4;
     private static final int BOTTLENECK = 40;
     private static final int HEAL = 10;
+    private static final int MAX_HEAL_SIZE = 5;
     private final RunaClass classOfRuna;
     private final HealthPoints healthPoints;
     private ArrayList<Ability> abilities;
@@ -67,5 +69,21 @@ public class Runa {
     public void heal() {
         if (getHealthPoints().getHealthPoints() <= BOTTLENECK) getHealthPoints().heal(HEAL);
         else getHealthPoints().heal(STARTING_HEALTH - getHealthPoints().getHealthPoints());
+    }
+
+    public void discardCard(int[] cardsToDiscard) {
+        var listOfCardsToDiscard = new ArrayList<Ability>();
+        Arrays.stream(cardsToDiscard).forEach(card -> listOfCardsToDiscard.add(getAbilities().get(card)));
+        listOfCardsToDiscard.forEach(card -> getAbilities().remove(card));
+    }
+
+    public int getPossibleHealSize() {
+        var missingHealth = STARTING_HEALTH - getHealthPoints().getHealthPoints();
+        var heal = 1;
+        for (int i = 10; i < STARTING_HEALTH; i+=10) {
+            if (i >= missingHealth) return heal;
+            heal++;
+        }
+        return heal;
     }
 }

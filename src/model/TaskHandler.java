@@ -230,21 +230,20 @@ public class TaskHandler {
                 heal = parser.parseNumber(inputUser, runa.getAbilities().size());
 
             }while (heal == 0);
-            runa.discardCard();
+            runa.discardCard(new int[]{heal});
             runa.heal();
         }
         else {
-            //TODO: this is not right but the idea kinda da same
-            int heal;
+            int[] heal;
                 output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
             do {
-                output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
+                output.output(String.format(Message.ENTER_MULTIPLE_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
                 parser.checkQuitParser(inputUser);
-                heal = parser.parseNumber(inputUser, runa.getAbilities().size());
+                heal = parser.parseNumbers(inputUser, runa.getPossibleHealSize());
 
-            }while (heal == 0);
-            runa.discardCard();
+            }while (heal == null);
+            runa.discardCard(heal);
         }
     }
 

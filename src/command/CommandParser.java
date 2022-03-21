@@ -34,5 +34,7 @@ public interface CommandParser {
 
     Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException;
 
-    int parseNumber(String input, int maxNumber);
+    int parseNumber(String input, int maxNumber) throws GameQuitException;
+
+    int[] parseNumbers(String input, int maxNumber) throws GameQuitException;
 }

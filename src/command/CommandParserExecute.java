@@ -9,8 +9,12 @@ import errors.SyntaxException;
 import model.entitie.runa.RunaClass;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import static message.Message.ENTER_NUMBER;
 
 /**
  * This class represents a Command Parser, which has the purpose to check the Validation of the Syntax and handles
@@ -35,7 +39,7 @@ public class CommandParserExecute implements CommandParser {
     public static final String SEED = "[0-9]+";
     public static final String REGEX_SEEDS = "SEED,SEED";
     public static final String QUIT_REGEX = "quit";
-    public static final String REGEX_NUMBER = "";
+    public static final String REGEX_NUMBERS = "(" + SEED + "|[" + SEED + ",]+" + SEED + ")";
 
     /**
      * check the input with the regex and throws Exception if it does not match
@@ -100,11 +104,29 @@ public class CommandParserExecute implements CommandParser {
     }
 
     @Override
-    public int parseNumber(String input, int maxNumber) {
-        if (checkQuitParser(input)) throw new ;
+    public int parseNumber(String input, int maxNumber) throws GameQuitException {
+        checkQuitParser(input);
         if (!input.matches(SEED)) return 0;
         var number = Integer.parseInt(input);
         if (number <= 0 || number > maxNumber) return 0;
         return number;
+    }
+
+    @Override
+    public int[] parseNumbers(String input, int maxNumber) throws GameQuitException {
+        checkQuitParser(input);
+        if (!input.matches(REGEX_NUMBERS)) return null;
+        int[] numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
+        if (numbers.length < maxNumber || duplicates(numbers)) return null;
+        return numbers;
+    }
+
+    private boolean duplicates(final int[] numbers) {
+        Set<Integer> lump = new HashSet<>();
+        for (int i : numbers) {
+            if (lump.contains(i)) return true;
+            lump.add(i);
+        }
+        return false;
     }
 }
