@@ -5,6 +5,8 @@ import core.Input;
 import core.Output;
 import core.Pair;
 import errors.CharacterClassException;
+import errors.Errors;
+import errors.GameLostException;
 import errors.SeedNotFoundException;
 import message.Message;
 import model.entitie.AttackType;
@@ -109,13 +111,13 @@ public class TaskHandler {
                 //first runa
                 inLevel = runaTurn(monstersInRoom);
                 //check if won
-
+                if (monsterIsAlive(monstersInRoom)) break;
                 //fp of runa
 
                 //every mob
 
                 //check if lost
-
+                hasLost();
                 //fp of mobs
             }
 
@@ -154,9 +156,9 @@ public class TaskHandler {
         var card = runa.getCard(cardIndex);
         //optional need monster to attack
         if (monstersInRoom.size() == 1 && card.getAttackType() == AttackType.ATTACK) {
-            runaAttack(monstersInRoom.get(0));
+            runaAttack(monstersInRoom.get(0), card);
         }
-        else {
+        else if (card.getAttackType() == AttackType.ATTACK) {
             output.output(String.format(Message.PICK_TARGET, getMonstersInRoomToString(monstersInRoom)));
             int mobIndex;
             do {
@@ -165,7 +167,7 @@ public class TaskHandler {
                 if (parser.checkQuitParser(userInput)) return false;
                 mobIndex = parser.parseNumber(userInput, monstersInRoom.size());
             } while(mobIndex == 0);
-            runaAttack(monstersInRoom.get(mobIndex));
+            runaAttack(monstersInRoom.get(mobIndex), card);
         }
         return true;
     }
@@ -176,32 +178,16 @@ public class TaskHandler {
         return outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString();
     }
 
-    private void runaAttack(Monster target) {
-        
+    private void runaAttack(Monster target, Abilities card) {
+        target.takeDamage();
     }
 
-    private void newCards() {
-
+    private void hasLost() throws GameLostException {
+        if (runa.getHealthPoints().getHealthPoints() <= 0 ) throw new GameLostException(Errors.GAME_OVER);
     }
 
-    private void newDice() {
-
-    }
-
-    private void upgrade() {
-
-    }
-
-    private void healing() {
-
-    }
-
-    private void lost() {
-        if (runa.getHealthPoints().getHealthPoints() <= 0) throw new ;
-    }
-
-    private void won() {
-
+    private boolean monsterIsAlive(List<Monster> monstersInRoom) {
+        return monstersInRoom.stream().anyMatch(monster -> monster.getHealthPoints().getHealthPoints() > 0);
     }
     /**
      * update the gamelevel to the next level

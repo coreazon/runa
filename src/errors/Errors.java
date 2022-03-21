@@ -20,7 +20,7 @@ public final class Errors {
      * Error-Message which gets thrown when there are command line arguments
      */
     public static final String ARGS_NOT_ALLOWED = "command line arguments are not allowed";
-
+    public static final String GAME_OVER = "Runa dies";
 
     private Errors() throws IllegalAccessException {
         throw new IllegalStateException("Utility-class Constructor");
