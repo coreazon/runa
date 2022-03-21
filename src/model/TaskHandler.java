@@ -40,7 +40,7 @@ public class TaskHandler {
     private final Runa runa;
     private final CommandParserExecute parser;
     private Queue<Monster> monsters;
-    private GameLevel gameLevel;
+    private final GameLevel gameLevel;
 
     public TaskHandler(Input input, Output output, CommandParserExecute parser) {
         this.input = input;
@@ -189,6 +189,8 @@ public class TaskHandler {
     private boolean monsterIsAlive(List<Monster> monstersInRoom) {
         return monstersInRoom.stream().anyMatch(monster -> monster.getHealthPoints().getHealthPoints() > 0);
     }
+
+
     /**
      * update the gamelevel to the next level
      * @throws
@@ -212,6 +214,36 @@ public class TaskHandler {
         monsters.forEach(monster -> outputBuilder.append(monster.toString()).append(System.lineSeparator()));
         outputBuilder.deleteCharAt(outputBuilder.length() - 1);
         return String.format(Message.BATTLE_INFO, runa.toString(), outputBuilder.toString());
+    }
+
+    private void heal() {
+        if (runa.getHealthPoints().getHealthPoints() == 50 || runa.getAbilities().size() == 1) return;
+        if (runa.getAbilities().size() == 2) {
+            int heal;
+                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()))
+            do {
+                output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
+                var inputUser = input.read();
+                if (parser.checkQuitParser(inputUser)) throw new ;
+                heal = parser.parseNumber(inputUser, runa.getAbilities().size());
+
+            }while (heal == 0);
+            runa.discardCard();
+            runa.heal();
+        }
+        else {
+            //TODO: this is not right but the idea kinda da same
+            int heal;
+                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()))
+            do {
+                output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
+                var inputUser = input.read();
+                if (parser.checkQuitParser(inputUser)) throw new ;
+                heal = parser.parseNumber(inputUser, runa.getAbilities().size());
+
+            }while (heal == 0);
+            runa.discardCard();
+        }
     }
 
 }

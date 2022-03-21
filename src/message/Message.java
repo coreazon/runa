@@ -18,6 +18,8 @@ public final class Message {
                                                 + "%s\nvs.\n%s" + "----------------------------------------";
     public static final String RUNA_CARDS = "Select card to play\n%s";
     public static final String PICK_TARGET = "Select Runa's target.\n%s";
+    public static final String HEAL = "Runa (%d/50 HP) can discard ability cards for healing (or none)\n" 
+                                        + "%s";
 
     /**
      * Utility class constructor
