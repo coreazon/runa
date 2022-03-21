@@ -48,6 +48,10 @@ public class Runa {
         this.focusCard = focusCard;
     }
 
+    public void takeDamage(HealthPoints damage) {
+        getHealthPoints().takeDamage(damage);
+    }
+
     public List<Ability> getAbilities() {
         return abilities;
     }

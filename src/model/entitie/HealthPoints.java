@@ -16,7 +16,7 @@ public class HealthPoints {
         this.healthPoints += healthPoints;
     }
 
-    public void takeDamage(int damage) {
-        healthPoints -= damage;
+    public void takeDamage(HealthPoints damage) {
+        healthPoints -= damage.getHealthPoints();
     }
 }

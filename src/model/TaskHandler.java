@@ -99,38 +99,54 @@ public class TaskHandler {
         return true;
     }
 
-    public boolean fight() {
+    /**
+     * handles the fighting section of the game.
+     *
+     * @return true as long as runa did not won the game
+     * @throws GameQuitException if runa quits the game
+     * @throws GameLostException if runa lost the game
+     */
+    public boolean fight() throws GameQuitException, GameLostException {
         var inLevel = true;
         while(inLevel) {
 
             output.output(String.format(Message.ENTER_STAGE, gameLevel.getGameRoom(), gameLevel.getGameLevel()));
             var monstersInRoom = getMobsForRoom();
 
-            var inRoom = true;
-            while (inRoom) {
+            //as long as in the same room
+            while (true) {
                 output.output(getBattleInformation());
 
 
                 //first runa
-                inLevel = runaTurn(monstersInRoom);
+                turnOfRuna(monstersInRoom);
                 //check if won
                 if (monsterIsAlive(monstersInRoom)) break;
                 //fp of runa
-
+                focusPointsTurnRuna();
                 //every mob
-
+                turnOfMonsters(monstersInRoom);
                 //check if lost
                 hasLost();
                 //fp of mobs
+                focusPointsTurnMonster(monstersInRoom);
             }
 
-
-
-            nextRoom();
+            
+            inLevel = nextRoom();
         }
+        //check if won the game
+        if (gameLevel.getGameLevel() == 2) return false;
+        //check rewards
 
+        //heal player
+        heal();
         nextLevel();
         return true;
+    }
+
+    private void turnOfMonsters(List<Monster> monstersInRoom) {
+        monstersInRoom.forEach(monster -> runa.takeDamage(monster.attack()));
     }
 
     private void focusPointsTurnRuna() {
@@ -161,7 +177,7 @@ public class TaskHandler {
         return list;
     }
 
-    private boolean runaTurn(List<Monster> monstersInRoom) throws GameQuitException {
+    private void turnOfRuna(List<Monster> monstersInRoom) throws GameQuitException {
         //first need attack from user
         output.output(String.format(Message.RUNA_CARDS, runa.getCardsInfo()));
         int cardIndex;
@@ -187,7 +203,6 @@ public class TaskHandler {
             } while(mobIndex == 0);
             runaAttack(monstersInRoom.get(mobIndex), card);
         }
-        return true;
     }
 
     private String getMonstersInRoomToString(List<Monster> monstersInRoom) {
@@ -222,9 +237,15 @@ public class TaskHandler {
     /**
      * update the gameroom to the next room or back to room 1 if it was the boss room
      */
-    private void nextRoom() {
-        if (gameLevel.getGameRoom() == 4) gameLevel.setGameRoom(1);
-        else gameLevel.setGameRoom(gameLevel.getGameRoom() + 1);
+    private boolean nextRoom() {
+        if (gameLevel.getGameRoom() == 4) {
+            gameLevel.setGameRoom(1);
+            return false;
+        }
+        else {
+            gameLevel.setGameRoom(gameLevel.getGameRoom() + 1);
+            return true;
+        }
     }
 
     private String getBattleInformation() {
