@@ -132,17 +132,26 @@ public class TaskHandler {
                 focusPointsTurnMonster(monstersInRoom);
             }
 
-            
+            heal();
             inLevel = nextRoom();
+            if (gameLevel.getGameRoom() != 4) reward();
         }
         //check if won the game
         if (gameLevel.getGameLevel() == 2) return false;
         //check rewards
-
+        upgrade();
         //heal player
-        heal();
+
         nextLevel();
         return true;
+    }
+
+    private void reward() {
+
+    }
+
+    private void upgrade() {
+
     }
 
     private void turnOfMonsters(List<Monster> monstersInRoom) {
