@@ -32,4 +32,6 @@ public interface CommandParser {
     boolean checkQuitParser(String input);
 
     Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException;
+
+    int parseNumber(String input, int maxNumber);
 }

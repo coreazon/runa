@@ -2,6 +2,8 @@ package model.entitie.mobs;
 
 import model.entitie.HealthPoints;
 
+import java.util.Arrays;
+
 public enum BossMobs {
 
     SPIDER_KING("Spider King", 1, new HealthPoints(50), Type.LIGHTNING),
@@ -33,6 +35,10 @@ public enum BossMobs {
 
     public HealthPoints getHealthPoints() {
         return healthPoints;
+    }
+
+    public static BossMobs getBoss(int level) {
+        return Arrays.stream(BossMobs.values()).filter(boss -> boss.getGameLevel() == level).findFirst().orElseThrow();
     }
 
 }

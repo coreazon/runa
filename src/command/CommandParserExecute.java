@@ -31,9 +31,10 @@ public class CommandParserExecute implements CommandParser {
     //REGEX here
 
     public static final String CHOOSE_CLASS_REGEX = "[1-3]";
-    public static final String SEED = "";
+    public static final String SEED = "[0-9]+";
     public static final String REGEX_SEEDS = "SEED,SEED";
     public static final String QUIT_REGEX = "quit";
+    public static final String REGEX_NUMBER = "";
 
     /**
      * check the input with the regex and throws Exception if it does not match
@@ -93,5 +94,14 @@ public class CommandParserExecute implements CommandParser {
         if (!input.matches(REGEX_SEEDS)) throw new SeedNotFoundException();
         var seeds = input.split(SEED_SEPARATOR);
         return new Pair<>(Integer.parseInt(seeds[0]), Integer.parseInt(seeds[1]));
+    }
+
+    @Override
+    public int parseNumber(String input, int maxNumber) {
+        if (checkQuitParser(input)) throw new ;
+        if (!input.matches(SEED)) return 0;
+        var number = Integer.parseInt(input);
+        if (number <= 0 || number > maxNumber) return 0;
+        return number;
     }
 }

@@ -11,12 +11,18 @@ public final class Message {
     public static final String ENTER_ROLL = "Enter dice roll [1--%d]:";
     public static final String ENTER_SEEDS = "Enter seeds [1--2147483647] separated by comma:";
     public static final String SHUFFLE_MESSAGE = "To shuffle ability cards and monsters, enter two seeds";
-    public static final String ENTER_STAGE = "Runa enters Stage %d of Level $d";
+    public static final String ENTER_STAGE = "Runa enters Stage %d of Level %d";
     public static final String RUNA_TOSTRING = "Runa (%d/50 HP, %d/%d FP)";
-    public static final String MONSTER_TOSTRING = "%s (%dHP, %d FP): attempts %s(%d) next"
+    public static final String MONSTER_TOSTRING = "%s (%dHP, %d FP): attempts %s(%d) next";
     public static final String BATTLE_INFO = "----------------------------------------\n" 
                                                 + "%s\nvs.\n%s" + "----------------------------------------";
-    public static String RUNA_CARDS = "Select card to play\n%s";
+    public static final String RUNA_CARDS = "Select card to play\n%s";
+    public static final String PICK_TARGET = "Select Runa's target.\n%s";
 
+    /**
+     * Utility class constructor
+     */
+    private Message() {
+        throw new IllegalStateException("Utility-class constructor.");
+    }
 }
-

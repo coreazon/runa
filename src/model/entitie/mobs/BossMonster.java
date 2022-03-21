@@ -1,4 +1,8 @@
 package model.entitie.mobs;
 
-public class BossMonster {
+public class BossMonster extends Monster {
+
+    public BossMonster(BossMobs boss) {
+
+    }
 }

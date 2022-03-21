@@ -1,5 +1,6 @@
 package model.entitie.runa;
 
+import message.Message;
 import model.dice.Dice;
 import model.entitie.FocusPoints;
 import model.entitie.HealthPoints;
@@ -25,6 +26,10 @@ public class Runa {
         this.focusPoints = new FocusPoints(this.dice.getSides());
     }
 
+    public ArrayList<Abilities> getAbilities() {
+        return abilities;
+    }
+
     public void setAbilities(List<Abilities> abilities) {
         this.abilities = (ArrayList<Abilities>) abilities;
     }
@@ -33,11 +38,27 @@ public class Runa {
         return classOfRuna;
     }
 
+    public HealthPoints getHealthPoints() {
+        return healthPoints;
+    }
+
+    public String getCardsInfo() {
+        return "";
+    }
+
     @Override
     public String toString() {
-        return String.format(Message.RUNA_TOSTRING, 
-            healthPoints.getHealthpoints(), 
-            focusPoints.getFocuspoints(),
+        return String.format(Message.RUNA_TOSTRING,
+            healthPoints.getHealthPoints(),
+            focusPoints.getFocusPoints(),
             dice.getSides());
+    }
+
+    public Abilities getCard(int index) {
+        return abilities.get(index);
+    }
+
+    public int getMaxCardsChoice() {
+        return 0;
     }
 }
