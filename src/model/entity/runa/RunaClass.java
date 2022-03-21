@@ -1,4 +1,4 @@
-package model.entitie.runa;
+package model.entity.runa;
 
 import java.util.Arrays;
 import java.util.List;

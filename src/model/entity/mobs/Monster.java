@@ -1,8 +1,8 @@
-package model.entitie.mobs;
+package model.entity.mobs;
 
-import model.entitie.AttackType;
-import model.entitie.FocusPoints;
-import model.entitie.HealthPoints;
+import model.entity.AttackType;
+import model.entity.FocusPoints;
+import model.entity.HealthPoints;
 
 import java.util.List;
 

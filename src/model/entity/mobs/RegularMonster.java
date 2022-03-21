@@ -1,6 +1,4 @@
-package model.entitie.mobs;
-
-import model.entitie.HealthPoints;
+package model.entity.mobs;
 
 public class RegularMonster extends Monster {
 

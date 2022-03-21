@@ -5,7 +5,7 @@ import errors.CharacterClassException;
 import errors.GameQuitException;
 import errors.SeedNotFoundException;
 import errors.SyntaxException;
-import model.entitie.runa.RunaClass;
+import model.entity.runa.RunaClass;
 
 import java.util.List;
 

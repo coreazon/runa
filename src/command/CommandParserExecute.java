@@ -6,15 +6,13 @@ import errors.Errors;
 import errors.GameQuitException;
 import errors.SeedNotFoundException;
 import errors.SyntaxException;
-import model.entitie.runa.RunaClass;
+import model.entity.runa.RunaClass;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import static message.Message.ENTER_NUMBER;
 
 /**
  * This class represents a Command Parser, which has the purpose to check the Validation of the Syntax and handles

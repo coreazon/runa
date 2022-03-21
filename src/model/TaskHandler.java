@@ -10,15 +10,15 @@ import errors.GameLostException;
 import errors.GameQuitException;
 import errors.SeedNotFoundException;
 import message.Message;
-import model.entitie.AttackType;
-import model.entitie.mobs.BossMobs;
-import model.entitie.mobs.BossMonster;
-import model.entitie.mobs.Mobs;
-import model.entitie.mobs.Monster;
-import model.entitie.runa.Abilities;
-import model.entitie.runa.Ability;
-import model.entitie.runa.Runa;
-import model.entitie.runa.RunaClass;
+import model.entity.AttackType;
+import model.entity.mobs.BossMobs;
+import model.entity.mobs.BossMonster;
+import model.entity.mobs.Mobs;
+import model.entity.mobs.Monster;
+import model.entity.runa.Abilities;
+import model.entity.runa.Ability;
+import model.entity.runa.Runa;
+import model.entity.runa.RunaClass;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -130,6 +130,7 @@ public class TaskHandler {
                 hasLost();
                 //fp of mobs
                 focusPointsTurnMonster(monstersInRoom);
+
             }
 
             heal();

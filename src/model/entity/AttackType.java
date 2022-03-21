@@ -1,4 +1,4 @@
-package model.entitie;
+package model.entity;
 
 public enum AttackType {
 

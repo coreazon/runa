@@ -1,6 +1,6 @@
-package model.entitie.mobs;
+package model.entity.mobs;
 
-import model.entitie.AttackType;
+import model.entity.AttackType;
 
 public enum MonsterCards {
 

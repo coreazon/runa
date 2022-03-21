@@ -1,4 +1,4 @@
-package model.entitie.runa;
+package model.entity.runa;
 
 public enum AbilityType {
 	

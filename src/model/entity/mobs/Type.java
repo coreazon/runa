@@ -1,4 +1,4 @@
-package model.entitie.mobs;
+package model.entity.mobs;
 public enum Type {
 	
 	WATER,

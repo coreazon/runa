@@ -1,6 +1,6 @@
-package model.entitie.mobs;
+package model.entity.mobs;
 
-import model.entitie.HealthPoints;
+import model.entity.HealthPoints;
 
 import java.util.Arrays;
 

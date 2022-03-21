@@ -1,7 +1,7 @@
-package model.entitie.runa;
+package model.entity.runa;
 
-import model.entitie.AttackType;
-import model.entitie.FocusPoints;
+import model.entity.AttackType;
+import model.entity.FocusPoints;
 
 import java.util.Arrays;
 import java.util.List;

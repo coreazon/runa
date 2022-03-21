@@ -1,6 +1,6 @@
-package model.entitie.mobs;
+package model.entity.mobs;
 
-import model.entitie.Score;
+import model.entity.Score;
 
 public class MonsterCard {
 

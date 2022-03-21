@@ -1,6 +1,6 @@
 package message;
 
-import model.entitie.runa.RunaClass;
+import model.entity.runa.RunaClass;
 
 public final class Message {
 

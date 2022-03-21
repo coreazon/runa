@@ -1,9 +1,9 @@
-package model.entitie.runa;
+package model.entity.runa;
 
 import message.Message;
 import model.dice.Dice;
-import model.entitie.FocusPoints;
-import model.entitie.HealthPoints;
+import model.entity.FocusPoints;
+import model.entity.HealthPoints;
 
 import java.util.ArrayList;
 import java.util.Arrays;

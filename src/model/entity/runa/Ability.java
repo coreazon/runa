@@ -1,6 +1,6 @@
-package model.entitie.runa;
+package model.entity.runa;
 
-import model.entitie.Score;
+import model.entity.Score;
 
 import java.util.Objects;
 
