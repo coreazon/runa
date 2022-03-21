@@ -7,6 +7,7 @@ import core.Pair;
 import errors.CharacterClassException;
 import errors.Errors;
 import errors.GameLostException;
+import errors.GameQuitException;
 import errors.SeedNotFoundException;
 import message.Message;
 import model.entitie.AttackType;
@@ -15,6 +16,7 @@ import model.entitie.mobs.BossMonster;
 import model.entitie.mobs.Mobs;
 import model.entitie.mobs.Monster;
 import model.entitie.runa.Abilities;
+import model.entitie.runa.Ability;
 import model.entitie.runa.Runa;
 import model.entitie.runa.RunaClass;
 
@@ -52,13 +54,15 @@ public class TaskHandler {
     }
 
 
-    private RunaClass initialize() {
+    private RunaClass initialize() throws GameQuitException {
         output.output(Message.WELCOME_MESSAGE);
         RunaClass runaClass = null;
         output.output(String.format(Message.ENTER_NUMBER, RunaClass.values().length));
         do {
             try {
-                runaClass = parser.parseClass(input.read());
+                var inputUser = input.read();
+                parser.checkQuitParser(inputUser);
+                runaClass = parser.parseClass(inputUser);
             } catch (CharacterClassException e){
                 output.output(String.format(Message.ENTER_NUMBER, RunaClass.values().length));
             }
@@ -66,14 +70,14 @@ public class TaskHandler {
         return runaClass;
     }
 
-    public boolean shuffleCards() {
+    public boolean shuffleCards() throws GameQuitException {
 
         output.output(Message.SHUFFLE_MESSAGE);
         output.output(Message.ENTER_SEEDS);
         Pair<Integer, Integer> seeds = null;
         do {
             var userInput = input.read();
-            if (parser.checkQuitParser(userInput)) return false;
+            parser.checkQuitParser(userInput);
             try {
                 seeds = parser.parseSeeds(userInput);
             } catch (SeedNotFoundException e){
@@ -81,10 +85,8 @@ public class TaskHandler {
             }
         }while(seeds == null);
 
-        //TODO: change that into a monster list or RegularMonster list
+        //TODO: change both lists according to their types
         var mobsList = Mobs.getMobsFromGameLevel(gameLevel.getGameLevel());
-
-
         var abilities = Abilities.getAllAbilitiesForRuna(runa.getClassOfRuna());
 
         Collections.shuffle(abilities, new Random(seeds.getFirstElement()));
@@ -143,28 +145,28 @@ public class TaskHandler {
         return list;
     }
 
-    private boolean runaTurn(List<Monster> monstersInRoom) {
+    private boolean runaTurn(List<Monster> monstersInRoom) throws GameQuitException {
         //first need attack from user
         output.output(String.format(Message.RUNA_CARDS, runa.getCardsInfo()));
         int cardIndex;
         do {
             output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
             var userInput = input.read();
-            if (parser.checkQuitParser(userInput)) return false;
+            parser.checkQuitParser(userInput);
             cardIndex = parser.parseNumber(userInput, runa.getMaxCardsChoice());
         }while(cardIndex == 0);
         var card = runa.getCard(cardIndex);
         //optional need monster to attack
-        if (monstersInRoom.size() == 1 && card.getAttackType() == AttackType.ATTACK) {
+        if (monstersInRoom.size() == 1 && card.getAbility().getAttackType() == AttackType.ATTACK) {
             runaAttack(monstersInRoom.get(0), card);
         }
-        else if (card.getAttackType() == AttackType.ATTACK) {
+        else if (card.getAbility().getAttackType() == AttackType.ATTACK) {
             output.output(String.format(Message.PICK_TARGET, getMonstersInRoomToString(monstersInRoom)));
             int mobIndex;
             do {
                 output.output(String.format(Message.ENTER_NUMBER, monstersInRoom.size()));
                 var userInput = input.read();
-                if (parser.checkQuitParser(userInput)) return false;
+                parser.checkQuitParser(userInput);
                 mobIndex = parser.parseNumber(userInput, monstersInRoom.size());
             } while(mobIndex == 0);
             runaAttack(monstersInRoom.get(mobIndex), card);
@@ -178,7 +180,7 @@ public class TaskHandler {
         return outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString();
     }
 
-    private void runaAttack(Monster target, Abilities card) {
+    private void runaAttack(Monster target, Ability card) {
         target.takeDamage();
     }
 
@@ -216,7 +218,7 @@ public class TaskHandler {
         return String.format(Message.BATTLE_INFO, runa.toString(), outputBuilder.toString());
     }
 
-    private void heal() {
+    private void heal() throws GameQuitException {
         if (runa.getHealthPoints().getHealthPoints() == 50 || runa.getAbilities().size() == 1) return;
         if (runa.getAbilities().size() == 2) {
             int heal;
@@ -224,7 +226,7 @@ public class TaskHandler {
             do {
                 output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
-                if (parser.checkQuitParser(inputUser)) throw new ;
+                parser.checkQuitParser(inputUser);
                 heal = parser.parseNumber(inputUser, runa.getAbilities().size());
 
             }while (heal == 0);
@@ -238,7 +240,7 @@ public class TaskHandler {
             do {
                 output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
-                if (parser.checkQuitParser(inputUser)) throw new ;
+                parser.checkQuitParser(inputUser);
                 heal = parser.parseNumber(inputUser, runa.getAbilities().size());
 
             }while (heal == 0);

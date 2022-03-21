@@ -12,9 +12,11 @@ public class Runa {
 
     private static final int STARTING_HEALTH = 50;
     private static final int STARTING_DICE = 4;
+    private static final int BOTTLENECK = 40;
+    private static final int HEAL = 10;
     private final RunaClass classOfRuna;
     private final HealthPoints healthPoints;
-    private ArrayList<Abilities> abilities;
+    private ArrayList<Ability> abilities;
     private final Dice dice;
     private final FocusPoints focusPoints;
 
@@ -26,12 +28,12 @@ public class Runa {
         this.focusPoints = new FocusPoints(this.dice.getSides());
     }
 
-    public ArrayList<Abilities> getAbilities() {
+    public List<Ability> getAbilities() {
         return abilities;
     }
 
-    public void setAbilities(List<Abilities> abilities) {
-        this.abilities = (ArrayList<Abilities>) abilities;
+    public void setAbilities(List<Ability> abilities) {
+        this.abilities = (ArrayList<Ability>) abilities;
     }
 
     public RunaClass getClassOfRuna() {
@@ -54,11 +56,16 @@ public class Runa {
             dice.getSides());
     }
 
-    public Abilities getCard(int index) {
+    public Ability getCard(int index) {
         return abilities.get(index);
     }
 
     public int getMaxCardsChoice() {
         return 0;
+    }
+
+    public void heal() {
+        if (getHealthPoints().getHealthPoints() <= BOTTLENECK) getHealthPoints().heal(HEAL);
+        else getHealthPoints().heal(STARTING_HEALTH - getHealthPoints().getHealthPoints());
     }
 }

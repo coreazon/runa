@@ -2,6 +2,7 @@ package command;
 
 import core.Pair;
 import errors.CharacterClassException;
+import errors.GameQuitException;
 import errors.SeedNotFoundException;
 import errors.SyntaxException;
 import model.entitie.runa.RunaClass;
@@ -29,7 +30,7 @@ public interface CommandParser {
 
     RunaClass parseClass(String input) throws CharacterClassException;
 
-    boolean checkQuitParser(String input);
+    void checkQuitParser(String input) throws GameQuitException;
 
     Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException;
 

@@ -12,8 +12,8 @@ public class HealthPoints {
         return healthPoints;
     }
 
-    public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
+    public void heal(int healthPoints) {
+        this.healthPoints += healthPoints;
     }
 
     public void takeDamage(int damage) {
