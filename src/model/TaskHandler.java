@@ -22,6 +22,7 @@ import model.entity.runa.RunaClass;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class TaskHandler {
     private final CommandParserExecute parser;
     private Queue<Monster> monsters;
     private final GameLevel gameLevel;
+    private final ArrayList<Ability> cardDeck;
 
     public TaskHandler(Input input, Output output, CommandParserExecute parser) {
         this.input = input;
@@ -52,6 +54,7 @@ public class TaskHandler {
         this.gameLevel = new GameLevel(1, 1);
         this.runa = new Runa(initialize());
         this.monsters = new ArrayDeque<>();
+        this.cardDeck = new ArrayList<>();
     }
 
 
@@ -147,8 +150,47 @@ public class TaskHandler {
         return true;
     }
 
-    private void chooseCard() {
+    private String getCardsForReward(int size) {
+        var outputBuilder = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            if (cardDeck.isEmpty()) break;
+            outputBuilder.append(String.format(Message.CARDS_LISTED, i+1, cardDeck.get(i).toString()));
+            outputBuilder.append("\n");
+        }
+        return outputBuilder.length() > 0 ? outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString() : outputBuilder.toString();
+    }
 
+    private void chooseCard() throws GameQuitException {
+        if (gameLevel.getGameRoom() == 1) {
+            output.output(String.format(Message.PICK_CARDS, 1, getCardsForReward(2)));
+            int card;
+            do {
+                output.output(String.format(Message.ENTER_NUMBER, 2));
+                var userInput = input.read();
+                parser.checkQuitParser(userInput);
+                card = parser.parseNumber(userInput, 2);
+            } while (card == 0);
+            runa.addCard(cardDeck.get(card - 1));
+            output.output(String.format(Message.UPGRADE, cardDeck.get(card - 1).toString()));
+            cardDeck.remove(card - 1);
+        }
+        else {
+            output.output(String.format(Message.PICK_CARDS, 2, getCardsForReward(4)));
+            int[] card;
+            do {
+                output.output(String.format(Message.ENTER_NUMBER, Math.min(cardDeck.size(), 4)));
+                var userInput = input.read();
+                parser.checkQuitParser(userInput);
+                card = parser.parseNumbers(userInput, Math.min(cardDeck.size(), 4));
+            } while (card == null);
+            var list = new ArrayList<Ability>();
+            Arrays.stream(card).forEach(ability -> {
+                runa.addCard(cardDeck.get(ability - 1));
+                list.add(cardDeck.get(ability - 1));
+            });
+            list.forEach(ability ->  output.output(String.format(Message.UPGRADE, ability.toString())));
+            list.forEach(cardDeck::remove);
+        }
     }
 
     private void reward() throws GameQuitException {

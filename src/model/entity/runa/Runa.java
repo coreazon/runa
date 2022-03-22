@@ -125,4 +125,8 @@ public class Runa {
         dice.setSides(dice.getSides() + 2);
         return String.format(Message.DICE_UPGRADE, dice.getSides());
     }
+
+    public void addCard(Ability card) {
+        abilities.add(card);
+    }
 }
