@@ -48,3 +48,6 @@ Heilung():
 checken ob weniger als 50 hp 
 	checken ob genau 2 Karten: nachricht um eine karte zu wählen und +10 hp && nicht mehr als 50 hp
 	wenn mehr : für jede +10 und nicht mehr als 50hp
+
+schaden:
+    kp muss das machen !
