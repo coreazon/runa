@@ -53,4 +53,6 @@ public enum Abilities {
 
         return Arrays.stream(Abilities.values()).filter(ability -> !runaClass.getAbilities().contains(ability)).collect(Collectors.toList());
     }
+
+
 }

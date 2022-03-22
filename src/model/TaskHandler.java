@@ -134,8 +134,8 @@ public class TaskHandler {
             }
 
             heal();
-            inLevel = nextRoom();
             if (gameLevel.getGameRoom() != 4) reward();
+            inLevel = nextRoom();
         }
         //check if won the game
         if (gameLevel.getGameLevel() == 2) return false;
@@ -147,12 +147,36 @@ public class TaskHandler {
         return true;
     }
 
-    private void reward() {
+    private void chooseCard() {
 
     }
 
-    private void upgrade() {
+    private void reward() throws GameQuitException {
 
+        output.output(Message.REWARD);
+        //check if runa can get better dice
+        if (runa.getDice().getSides() == 12) {
+            chooseCard();
+        }
+        else {
+            int reward;
+            do {
+                output.output(String.format(Message.ENTER_NUMBER, 2));
+                var userInput = input.read();
+                parser.checkQuitParser(userInput);
+                reward = parser.parseNumber(userInput, 2);
+            } while (reward == 0);
+            if (reward == 1){
+                output.output(runa.newDice());
+            }
+            else {
+                chooseCard();
+            }
+        }
+    }
+
+    private void upgrade() {
+        output.output(runa.upgrade());
     }
 
     private void turnOfMonsters(List<Monster> monstersInRoom) {

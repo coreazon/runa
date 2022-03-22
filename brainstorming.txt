@@ -33,16 +33,18 @@ loop ende
 
 Reward():
 
-checken ob Raum <4: input user :
-	-> neue karte
-	-> neuer würfel
-else karten upgrade
+checken ob runa würfel d12 hat:
+    wenn ja kriegt sie karte;
+    wenn nein aussuchen
 
+
+KarteReward():
+    checken aus welchen Raum runa kam -> anzahl an monster = anzahl an zu nehmenden Karten
+    2 * anzahl an besiegten monster - Karten als auswahl (wenn möglich sonst weniger)
+    adden;
 
 Heilung():
 
 checken ob weniger als 50 hp 
 	checken ob genau 2 Karten: nachricht um eine karte zu wählen und +10 hp && nicht mehr als 50 hp
 	wenn mehr : für jede +10 und nicht mehr als 50hp
-
-

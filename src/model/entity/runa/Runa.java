@@ -4,6 +4,7 @@ import message.Message;
 import model.dice.Dice;
 import model.entity.FocusPoints;
 import model.entity.HealthPoints;
+import model.entity.Score;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,5 +108,21 @@ public class Runa {
             heal++;
         }
         return heal;
+    }
+
+    public String upgrade() {
+        var cards = getClassOfRuna().getAbilities();
+        var outputBuilder = new StringBuilder();
+        cards.forEach(card -> {
+            var newCard = new Ability(card, new Score(2));
+            this.abilities.add(newCard);
+            outputBuilder.append(String.format(Message.UPGRADE, newCard)).append("\n");
+        });
+        return outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString();
+    }
+
+    public String newDice() {
+        dice.setSides(dice.getSides() + 2);
+        return String.format(Message.DICE_UPGRADE, dice.getSides());
     }
 }

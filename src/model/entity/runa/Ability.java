@@ -8,6 +8,7 @@ public class Ability {
 
     private final Abilities ability;
     private final Score level;
+    private static final String FORMAT = "%s(%d)";
 
     public Ability(Abilities ability, Score level) {
         this.ability = ability;
@@ -33,5 +34,10 @@ public class Ability {
     @Override
     public int hashCode() {
         return Objects.hash(ability, level);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(FORMAT, ability.getRepresentation(), level.getNumber());
     }
 }

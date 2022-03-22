@@ -20,6 +20,11 @@ public final class Message {
     public static final String PICK_TARGET = "Select Runa's target.\n%s";
     public static final String HEAL = "Runa (%d/50 HP) can discard ability cards for healing (or none)\n" 
                                         + "%s";
+    public static final String UPGRADE = "Runa gets %s";
+    public static final String REWARD = "Choose Runa's reward\n" +
+            "1) new ability cards\n" +
+            "2) next player dice";
+    public static final String DICE_UPGRADE = "upgrades her die to a %d.";
 
     /**
      * Utility class constructor
