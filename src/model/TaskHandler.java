@@ -11,6 +11,8 @@ import errors.GameQuitException;
 import errors.SeedNotFoundException;
 import message.Message;
 import model.entity.AttackType;
+import model.entity.FocusPoints;
+import model.entity.Score;
 import model.entity.mobs.BossMobs;
 import model.entity.mobs.BossMonster;
 import model.entity.mobs.Mobs;
@@ -96,8 +98,14 @@ public class TaskHandler {
         Collections.shuffle(abilities, new Random(seeds.getFirstElement()));
         Collections.shuffle(mobsList, new Random(seeds.getSecondElement()));
 
+        var listOfAbilities = new ArrayList<Ability>();
+        var listOfMonsters = new LinkedList<Monster>();
+
+        abilities.forEach(ability -> listOfAbilities.add(new Ability(ability, new Score(gameLevel.getGameLevel()))));
+        listOfMonsters.forEach(monster -> listOfMonsters.add(new Monster()))
+
         this.monsters = new LinkedList<>(mobsList);
-        runa.setAbilities(new ArrayList<>(abilities));
+        runa.setAbilities(new ArrayList<>(listOfAbilities));
 
         return true;
     }
@@ -242,7 +250,7 @@ public class TaskHandler {
 
     private List<Monster> getMobsForRoom() {
         LinkedList<Monster> list = new LinkedList<>();
-        if (gameLevel.getGameRoom() == 4) list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel())));
+        if (gameLevel.getGameRoom() == 4) list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel()), new FocusPoints(gameLevel.getGameLevel())));
         else if (gameLevel.getGameRoom() == 1) list.add(this.monsters.poll());
         else {
             var firstMob = this.monsters.poll();
