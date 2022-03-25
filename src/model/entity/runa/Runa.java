@@ -5,6 +5,7 @@ import model.dice.Dice;
 import model.entity.FocusPoints;
 import model.entity.HealthPoints;
 import model.entity.Score;
+import model.entity.mobs.Monster;
 import model.entity.mobs.Type;
 
 import java.util.ArrayList;
@@ -60,10 +61,13 @@ public class Runa {
         this.focusCard = focusCard;
     }
 
-    public void takeDamage(HealthPoints damage, AbilityType type, Type target) {
-        if (defenseCard != null) {
-            if (defenseCard.getAbility().getDefense() == type)
-                damage.shieldDamage(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), this.getDice(), this.focusPoints, target));
+    public void takeDamage(HealthPoints damage, AbilityType type, Monster target) {
+        if (defenseCard != null && defenseCard.getAbility().getDefense() == type) {
+            damage.shieldDamage(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), this.getDice(), this.focusPoints, target.getType()));
+            if (defenseCard.getAbility() == Abilities.REFLECT) {
+                target.takeDirectHit(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), this.getDice(), this.focusPoints, target.getType()));
+            }
+
             this.defenseCard = null;
         }
         healthPoints.takeDamage(damage);

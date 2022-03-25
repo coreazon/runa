@@ -27,6 +27,7 @@ public final class Message {
     public static final String DICE_UPGRADE = "upgrades her die to a %d.";
     public static final String PICK_CARDS = "Pick %d card(s) as loot\n%s";
     public static final String CARDS_LISTED = "%d) %s";
+    public static final String WON = "Runa won!";
 
     /**
      * Utility class constructor

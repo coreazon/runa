@@ -8,6 +8,7 @@ import errors.CharacterClassException;
 import errors.Errors;
 import errors.GameLostException;
 import errors.GameQuitException;
+import errors.GameWonException;
 import errors.SeedNotFoundException;
 import message.Message;
 import model.entity.AttackType;
@@ -118,7 +119,7 @@ public class TaskHandler {
      * @throws GameQuitException if runa quits the game
      * @throws GameLostException if runa lost the game
      */
-    public boolean fight() throws GameQuitException, GameLostException {
+    public boolean fight() throws GameQuitException, GameLostException, GameWonException {
         var inLevel = true;
         while(inLevel) {
 
@@ -235,13 +236,14 @@ public class TaskHandler {
             var card = monster.getCards().remove(0);
             if (card.getCard().isBreakFocus() && runa.getFocusCard() != null) runa.setFocusCard(null);
             if (card.getCard().getAttackType() == AttackType.ATTACK) {
-                runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster.getType());
+                runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster);
             }
             else if (card.getCard().getAttackType() == AttackType.DEFENSE) {
                 monster.setDefenseCard(card);
             }else {
                 monster.setFocusCard(card);
             }
+            monster.reduceFocusPoints(card);
         });
     }
 
@@ -339,9 +341,9 @@ public class TaskHandler {
      * update the gamelevel to the next level
      * @throws
      */
-    private void nextLevel() {
+    private void nextLevel() throws GameWonException {
         //check if won game
-        if (gameLevel.getGameLevel() == 2) throw new ;
+        if (gameLevel.getGameLevel() == 2) throw new GameWonException(Message.WON);
         gameLevel.setGameLevel(gameLevel.getGameLevel() + 1);
     }
 

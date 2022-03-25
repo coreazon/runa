@@ -65,19 +65,12 @@ public class Monster {
         healthPoints.takeDamage(damage);
     }
 
-    public HealthPoints attack() {
-        var card = cards.remove(0);
-        HealthPoints damage;
-        //code here
-        if (card.getCard().getAttackType() == AttackType.DEFENSE){
-            setDefenseCard(card);
-            damage = new HealthPoints(0);
-        }
-        else if () {
+    public void takeDirectHit(HealthPoints damage) {
+        healthPoints.takeDamage(damage);
+    }
 
-        }
-
-        cards.add(card);
-        return damage;
+    public void reduceFocusPoints(MonsterCard card) {
+        if (card.getCard().getType() != AbilityType.MAGICAL) return;
+        this.focusPoints.setFocusPoints(getFocusPoints().getFocusPoints() - card.getLevel().getNumber());
     }
 }

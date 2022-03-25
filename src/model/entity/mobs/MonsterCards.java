@@ -35,46 +35,46 @@ public enum MonsterCards implements DamageCalculatorMob {
             return new HealthPoints(damage);
         }
     },
-    FOCUS("Focus", AttackType.NONE, AbilityType.NONE, false, AbilityType.PHYSICAL){
+    FOCUS("Focus", AttackType.NONE, AbilityType.NONE, false, AbilityType.NONE){
         @Override
         public HealthPoints calculateDamage(Score level) {
             return new HealthPoints(0);
         }
     },
-    BLOCK("Block", AttackType.DEFENSE, AbilityType.PHYSICAL, false, AbilityType.PHYSICAL){
+    BLOCK("Block", AttackType.DEFENSE, AbilityType.PHYSICAL, false, AbilityType.NONE){
         @Override
         public HealthPoints calculateDamage(Score level) {
             return new HealthPoints(7);
         }
     },
-    DEFLECT("Deflect", AttackType.DEFENSE, AbilityType.MAGICAL, false, AbilityType.PHYSICAL){
+    DEFLECT("Deflect", AttackType.DEFENSE, AbilityType.MAGICAL, false, AbilityType.NONE){
         @Override
         public HealthPoints calculateDamage(Score level) {
             return new HealthPoints(11 * level.getNumber() + 2);
         }
     },
-    WATER("Water", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.PHYSICAL){
+    WATER("Water", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.MAGICAL){
         @Override
         public HealthPoints calculateDamage(Score level) {
             int damage = 8 * level.getNumber() + 2;
             return new HealthPoints(damage);
         }
     },
-    ICE("Ice", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.PHYSICAL){
+    ICE("Ice", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.MAGICAL){
         @Override
         public HealthPoints calculateDamage(Score level) {
             int damage = 10 * level.getNumber() + 2;
             return new HealthPoints(damage);
         }
     },
-    FIRE("Fire", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.PHYSICAL){
+    FIRE("Fire", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.MAGICAL){
         @Override
         public HealthPoints calculateDamage(Score level) {
             int damage = 12 * level.getNumber() + 2;
             return new HealthPoints(damage);
         }
     },
-    LIGHTNING("Lightning", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.PHYSICAL){
+    LIGHTNING("Lightning", AttackType.ATTACK, AbilityType.NONE, false, AbilityType.MAGICAL){
         @Override
         public HealthPoints calculateDamage(Score level) {
             int damage = 14 * level.getNumber() + 2;
