@@ -3,6 +3,7 @@ package model.entity.mobs;
 import model.entity.AttackType;
 import model.entity.FocusPoints;
 import model.entity.HealthPoints;
+import model.entity.runa.AbilityType;
 
 import java.util.List;
 
@@ -56,9 +57,10 @@ public class Monster {
         this.defenseCard = defenseCard;
     }
 
-    public void takeDamage(HealthPoints damage){
+    public void takeDamage(HealthPoints damage, AbilityType type){
         if (defenseCard != null) {
-            damage.shieldDamage(defenseCard.getCard().calculateDamage(defenseCard.getLevel()));
+            if (defenseCard.getCard().getDefense() == type) damage.shieldDamage(defenseCard.getCard().calculateDamage(defenseCard.getLevel()));
+            this.defenseCard = null;
         }
         healthPoints.takeDamage(damage);
     }

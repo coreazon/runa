@@ -231,7 +231,18 @@ public class TaskHandler {
     }
 
     private void turnOfMonsters(List<Monster> monstersInRoom) {
-        monstersInRoom.forEach(monster -> runa.takeDamage(monster.attack()));
+        monstersInRoom.forEach(monster -> {
+            var card = monster.getCards().remove(0);
+            if (card.getCard().isBreakFocus() && runa.getFocusCard() != null) runa.setFocusCard(null);
+            if (card.getCard().getAttackType() == AttackType.ATTACK) {
+                runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster.getType());
+            }
+            else if (card.getCard().getAttackType() == AttackType.DEFENSE) {
+                monster.setDefenseCard(card);
+            }else {
+                monster.setFocusCard(card);
+            }
+        });
     }
 
     private void focusPointsTurnRuna() {
@@ -304,8 +315,9 @@ public class TaskHandler {
     }
 
     private void runaAttack(Monster target, Ability card) {
+        if (card.getAbility().isBreakFocus() && target.getFocusCard() != null) target.setFocusCard(null);
         if (card.getAbility().getAttackType() == AttackType.ATTACK) {
-            target.takeDamage(card.getAbility().calculateDamage(card.getLevel(), runa.getDice(), runa.getFocusPoints(), target.getType()));
+            target.takeDamage(card.getAbility().calculateDamage(card.getLevel(), runa.getDice(), runa.getFocusPoints(), target.getType()), card.getAbility().getAbilityType());
         }
         else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
             runa.setDefenseCard(card);
