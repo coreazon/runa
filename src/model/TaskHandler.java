@@ -17,6 +17,7 @@ import model.entity.mobs.BossMobs;
 import model.entity.mobs.BossMonster;
 import model.entity.mobs.Mobs;
 import model.entity.mobs.Monster;
+import model.entity.mobs.RegularMonster;
 import model.entity.runa.Abilities;
 import model.entity.runa.Ability;
 import model.entity.runa.Runa;
@@ -102,9 +103,9 @@ public class TaskHandler {
         var listOfMonsters = new LinkedList<Monster>();
 
         abilities.forEach(ability -> listOfAbilities.add(new Ability(ability, new Score(gameLevel.getGameLevel()))));
-        listOfMonsters.forEach(monster -> listOfMonsters.add(new Monster()));
+        mobsList.forEach(monster -> listOfMonsters.add(new RegularMonster(monster, new FocusPoints(gameLevel.getGameLevel()))));
 
-        this.monsters = new LinkedList<>(mobsList);
+        this.monsters = new LinkedList<>(listOfMonsters);
         runa.setAbilities(new ArrayList<>(listOfAbilities));
 
         return true;
@@ -236,7 +237,7 @@ public class TaskHandler {
     private void focusPointsTurnRuna() {
         if (runa.getFocusCard() == null) return;
         var focusPoints = runa.getFocusCard().getLevel().getNumber();
-        runa.getFocusPoints().setFocusPoints(focusPoints);
+        runa.getFocusPoints().setFocusPoints(Math.min(focusPoints + runa.getFocusPoints().getFocusPoints(), runa.getDice().getSides()));
         runa.setFocusCard(null);
     }
 
@@ -265,18 +266,17 @@ public class TaskHandler {
         //first need attack from user
         output.output(String.format(Message.RUNA_CARDS, runa.getCardsInfo()));
         int cardIndex;
+        Ability card;
         do {
             output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
             var userInput = input.read();
             parser.checkQuitParser(userInput);
             cardIndex = parser.parseNumber(userInput, runa.getMaxCardsChoice());
+            card = runa.getCard(cardIndex);
+            if (!runa.canPlayCard(card)) cardIndex = 0;
         }while(cardIndex == 0);
-        var card = runa.getCard(cardIndex);
         //optional need monster to attack
-        if (monstersInRoom.size() == 1 && card.getAbility().getAttackType() == AttackType.ATTACK) {
-            runaAttack(monstersInRoom.get(0), card);
-        }
-        else if (card.getAbility().getAttackType() == AttackType.ATTACK) {
+        if (monstersInRoom.size() != 1 && card.getAbility().getAttackType() == AttackType.ATTACK) {
             output.output(String.format(Message.PICK_TARGET, getMonstersInRoomToString(monstersInRoom)));
             int mobIndex;
             do {
@@ -287,6 +287,14 @@ public class TaskHandler {
             } while(mobIndex == 0);
             runaAttack(monstersInRoom.get(mobIndex), card);
         }
+        else {
+            runaAttack(monstersInRoom.get(0), card);
+        }
+        reduceFocusPoints(card);
+    }
+
+    private void reduceFocusPoints(Ability card) {
+        runa.reduceFocusPoints(card.getAbility().getFpCosts());
     }
 
     private String getMonstersInRoomToString(List<Monster> monstersInRoom) {

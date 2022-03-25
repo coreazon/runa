@@ -136,6 +136,14 @@ public class Runa {
         return String.format(Message.DICE_UPGRADE, dice.getSides());
     }
 
+    public boolean canPlayCard(Ability card) {
+        return focusPoints.getFocusPoints() >= card.getAbility().getFpCosts().getFocusPoints();
+    }
+
+    public void reduceFocusPoints(FocusPoints focusPoints) {
+        this.focusPoints.setFocusPoints(getFocusPoints().getFocusPoints() - focusPoints.getFocusPoints());
+    }
+
     public void addCard(Ability card) {
         abilities.add(card);
     }

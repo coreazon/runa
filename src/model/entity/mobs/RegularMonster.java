@@ -7,7 +7,7 @@ public class RegularMonster extends Monster {
     private final Mobs mob;
 
     public RegularMonster(Mobs mob, FocusPoints focusPoints) {
-        super(mob.getHealthPoints(), focusPoints, mob.getCards());
+        super(mob.getHealthPoints(), focusPoints, mob.getCards(), mob.getType());
         this.mob = mob;
     }
 
