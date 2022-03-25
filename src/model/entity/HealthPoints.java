@@ -19,4 +19,9 @@ public class HealthPoints {
     public void takeDamage(HealthPoints damage) {
         healthPoints -= damage.getHealthPoints();
     }
+
+    public void shieldDamage(HealthPoints shield) {
+        healthPoints -= shield.getHealthPoints();
+        if (healthPoints < 0) healthPoints = 0;
+    }
 }

@@ -102,7 +102,7 @@ public class TaskHandler {
         var listOfMonsters = new LinkedList<Monster>();
 
         abilities.forEach(ability -> listOfAbilities.add(new Ability(ability, new Score(gameLevel.getGameLevel()))));
-        listOfMonsters.forEach(monster -> listOfMonsters.add(new Monster()))
+        listOfMonsters.forEach(monster -> listOfMonsters.add(new Monster()));
 
         this.monsters = new LinkedList<>(mobsList);
         runa.setAbilities(new ArrayList<>(listOfAbilities));
@@ -296,7 +296,14 @@ public class TaskHandler {
     }
 
     private void runaAttack(Monster target, Ability card) {
-        target.takeDamage();
+        if (card.getAbility().getAttackType() == AttackType.ATTACK) {
+            target.takeDamage(card.getAbility().calculateDamage(card.getLevel(), runa.getDice(), runa.getFocusPoints(), target.getType()));
+        }
+        else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
+            runa.setDefenseCard(card);
+        }else {
+            runa.setFocusCard(card);
+        }
     }
 
     private void hasLost() throws GameLostException {

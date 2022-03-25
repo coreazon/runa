@@ -12,14 +12,20 @@ public class Monster {
     private MonsterCard focusCard;
     private MonsterCard defenseCard;
     private final List<MonsterCard> cards;
+    private final Type type;
     private final FocusPoints focusPoints;
 
-    public Monster(HealthPoints healthPoints, FocusPoints focusPoints, List<MonsterCard> cards) {
+    public Monster(HealthPoints healthPoints, FocusPoints focusPoints, List<MonsterCard> cards, Type type) {
         this.healthPoints = healthPoints;
         this.focusCard = null;
+        this.type = type;
         this.defenseCard = null;
         this.focusPoints = focusPoints;
         this.cards = cards;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public FocusPoints getFocusPoints() {
@@ -51,6 +57,9 @@ public class Monster {
     }
 
     public void takeDamage(HealthPoints damage){
+        if (defenseCard != null) {
+            damage.shieldDamage(defenseCard.getCard().calculateDamage(defenseCard.getLevel()));
+        }
         healthPoints.takeDamage(damage);
     }
 
