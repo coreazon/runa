@@ -11,21 +11,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum Abilities implements DamageCalculatorRuna{
+public enum Abilities implements DamageCalculatorRuna {
 
-    SLASH("Slash", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, true, AbilityType.NONE){
+    SLASH("Slash", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, true, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
             return new HealthPoints(4 * level.getNumber() + dice.getSides());
         }
     },
-    SWING("Swing", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, true, AbilityType.NONE){
+    SWING("Swing", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, true, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
             return new HealthPoints(5 * level.getNumber() + dice.getSides());
         }
     },
-    THRUST("Thrust", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, false, AbilityType.NONE){
+    THRUST("Thrust", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
             int damage = 6 * level.getNumber() + dice.getSides();
@@ -33,7 +33,7 @@ public enum Abilities implements DamageCalculatorRuna{
             return new HealthPoints(damage);
         }
     },
-    PIERCE("Pierce", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, false, AbilityType.NONE){
+    PIERCE("Pierce", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.ATTACK, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
             int damage = 7 * level.getNumber() + dice.getSides();
@@ -41,52 +41,52 @@ public enum Abilities implements DamageCalculatorRuna{
             return new HealthPoints(damage);
         }
     },
-    PARRY("Parry", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.DEFENSE, false, AbilityType.PHYSICAL){
+    PARRY("Parry", AbilityType.PHYSICAL, new FocusPoints(0), AttackType.DEFENSE, false, AbilityType.PHYSICAL) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
             return new HealthPoints(7 * level.getNumber());
         }
     },
-    FOCUS("Focus", AbilityType.MAGICAL, new FocusPoints(0), AttackType.NONE, false, AbilityType.NONE){
+    FOCUS("Focus", AbilityType.MAGICAL, new FocusPoints(0), AttackType.NONE, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
             return new HealthPoints(0);
         }
     },
-    REFLECT("Reflect", AbilityType.MAGICAL, new FocusPoints(0), AttackType.DEFENSE, false, AbilityType.MAGICAL){
+    REFLECT("Reflect", AbilityType.MAGICAL, new FocusPoints(0), AttackType.DEFENSE, false, AbilityType.MAGICAL) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
             return new HealthPoints(10 * level.getNumber());
         }
     },
-    WATER("Water", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE){
+    WATER("Water", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
-            int damage = ( 2 * level.getNumber() + 4 ) * focusPoints.getFocusPoints();
+            int damage = (2 * level.getNumber() + 4) * focusPoints.getFocusPoints();
             if (targetType == Type.LIGHTNING) damage += 2 * level.getNumber();
             return new HealthPoints(damage);
         }
     },
-    ICE("Ice", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE){
+    ICE("Ice", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
-            int damage = ( 2 * level.getNumber() + 4 ) * focusPoints.getFocusPoints() + 2;
+            int damage = (2 * level.getNumber() + 4) * focusPoints.getFocusPoints() + 2;
             if (targetType == Type.WATER) damage += 2 * level.getNumber();
             return new HealthPoints(damage);
         }
     },
-    FIRE("Fire", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE){
+    FIRE("Fire", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
-            int damage = ( 2 * level.getNumber() + 4 ) * focusPoints.getFocusPoints();
+            int damage = (2 * level.getNumber() + 4) * focusPoints.getFocusPoints();
             if (targetType == Type.ICE) damage += 2 * level.getNumber();
             return new HealthPoints(damage);
         }
     },
-    LIGHTNING("Lightning", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE){
+    LIGHTNING("Lightning", AbilityType.MAGICAL, new FocusPoints(1), AttackType.ATTACK, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType) {
-            int damage = ( 2 * level.getNumber() + 5 ) * focusPoints.getFocusPoints() + 2;
+            int damage = (2 * level.getNumber() + 5) * focusPoints.getFocusPoints() + 2;
             if (targetType == Type.FIRE) damage += 2 * level.getNumber();
             return new HealthPoints(damage);
         }
@@ -106,6 +106,11 @@ public enum Abilities implements DamageCalculatorRuna{
         this.attackType = attackType;
         this.breakFocus = breakFocus;
         this.defenseType = defenseType;
+    }
+
+    public static List<Abilities> getAllAbilitiesForRuna(RunaClass runaClass) {
+
+        return Arrays.stream(Abilities.values()).filter(ability -> !runaClass.getAbilities().contains(ability)).collect(Collectors.toList());
     }
 
     public boolean isBreakFocus() {
@@ -130,11 +135,6 @@ public enum Abilities implements DamageCalculatorRuna{
 
     public AttackType getAttackType() {
         return attackType;
-    }
-
-    public static List<Abilities> getAllAbilitiesForRuna(RunaClass runaClass) {
-
-        return Arrays.stream(Abilities.values()).filter(ability -> !runaClass.getAbilities().contains(ability)).collect(Collectors.toList());
     }
 
 

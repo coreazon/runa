@@ -1,6 +1,5 @@
 package model.entity.mobs;
 
-import model.entity.AttackType;
 import model.entity.FocusPoints;
 import model.entity.HealthPoints;
 import model.entity.runa.AbilityType;
@@ -10,11 +9,11 @@ import java.util.List;
 public class Monster {
 
     private final HealthPoints healthPoints;
-    private MonsterCard focusCard;
-    private MonsterCard defenseCard;
     private final List<MonsterCard> cards;
     private final Type type;
     private final FocusPoints focusPoints;
+    private MonsterCard focusCard;
+    private MonsterCard defenseCard;
 
     public Monster(HealthPoints healthPoints, FocusPoints focusPoints, List<MonsterCard> cards, Type type) {
         this.healthPoints = healthPoints;
@@ -37,6 +36,10 @@ public class Monster {
         return defenseCard;
     }
 
+    public void setDefenseCard(MonsterCard defenseCard) {
+        this.defenseCard = defenseCard;
+    }
+
     public List<MonsterCard> getCards() {
         return cards;
     }
@@ -53,13 +56,10 @@ public class Monster {
         return healthPoints;
     }
 
-    public void setDefenseCard(MonsterCard defenseCard) {
-        this.defenseCard = defenseCard;
-    }
-
-    public void takeDamage(HealthPoints damage, AbilityType type){
+    public void takeDamage(HealthPoints damage, AbilityType type) {
         if (defenseCard != null) {
-            if (defenseCard.getCard().getDefense() == type) damage.shieldDamage(defenseCard.getCard().calculateDamage(defenseCard.getLevel()));
+            if (defenseCard.getCard().getDefense() == type)
+                damage.shieldDamage(defenseCard.getCard().calculateDamage(defenseCard.getLevel()));
             this.defenseCard = null;
         }
         healthPoints.takeDamage(damage);

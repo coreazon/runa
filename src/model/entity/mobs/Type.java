@@ -1,10 +1,11 @@
 package model.entity.mobs;
+
 public enum Type {
-	
-	WATER,
-	ICE,
-	FIRE,
-	LIGHTNING,
-	NONE;
+
+    WATER,
+    ICE,
+    FIRE,
+    LIGHTNING,
+    NONE;
 
 }

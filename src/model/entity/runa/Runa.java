@@ -6,7 +6,6 @@ import model.entity.FocusPoints;
 import model.entity.HealthPoints;
 import model.entity.Score;
 import model.entity.mobs.Monster;
-import model.entity.mobs.Type;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +20,9 @@ public class Runa {
     private static final int MAX_HEAL_SIZE = 5;
     private final RunaClass classOfRuna;
     private final HealthPoints healthPoints;
-    private ArrayList<Ability> abilities;
     private final Dice dice;
     private final FocusPoints focusPoints;
+    private ArrayList<Ability> abilities;
     private Ability focusCard;
     private Ability defenseCard;
 
@@ -49,16 +48,16 @@ public class Runa {
         return focusCard;
     }
 
+    public void setFocusCard(Ability focusCard) {
+        this.focusCard = focusCard;
+    }
+
     public Dice getDice() {
         return dice;
     }
 
     public FocusPoints getFocusPoints() {
         return focusPoints;
-    }
-
-    public void setFocusCard(Ability focusCard) {
-        this.focusCard = focusCard;
     }
 
     public void takeDamage(HealthPoints damage, AbilityType type, Monster target) {
@@ -98,9 +97,9 @@ public class Runa {
     @Override
     public String toString() {
         return String.format(Message.RUNA_TOSTRING,
-            healthPoints.getHealthPoints(),
-            focusPoints.getFocusPoints(),
-            dice.getSides());
+                healthPoints.getHealthPoints(),
+                focusPoints.getFocusPoints(),
+                dice.getSides());
     }
 
     public Ability getCard(int index) {
@@ -125,7 +124,7 @@ public class Runa {
     public int getPossibleHealSize() {
         var missingHealth = STARTING_HEALTH - getHealthPoints().getHealthPoints();
         var heal = 1;
-        for (int i = 10; i < STARTING_HEALTH; i+=10) {
+        for (int i = 10; i < STARTING_HEALTH; i += 10) {
             if (i >= missingHealth) return heal;
             heal++;
         }

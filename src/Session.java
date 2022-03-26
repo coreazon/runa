@@ -1,18 +1,11 @@
 import command.CommandParserExecute;
-import command.Commands;
-import command.Result;
 import core.Input;
 import core.Output;
-import core.Pair;
-import errors.Errors;
 import errors.GameLostException;
 import errors.GameQuitException;
 import errors.GameWonException;
-import errors.SyntaxException;
 import message.Message;
 import model.TaskHandler;
-
-import java.util.List;
 
 /**
  * The class describes a session for a command execution
@@ -32,9 +25,9 @@ public class Session {
     /**
      * Instantiates a new session
      *
-     * @param output      the output consumer
-     * @param errorOutput the input supplier
-     * @param input       the error output consumer
+     * @param output               the output consumer
+     * @param errorOutput          the input supplier
+     * @param input                the error output consumer
      * @param commandParserExecute the command parser
      */
     public Session(Output output, Output errorOutput, Input input, CommandParserExecute commandParserExecute) {
@@ -64,7 +57,7 @@ public class Session {
         isCodeRunning = true;
         try {
             taskHandler.start();
-        }catch (GameQuitException e) {
+        } catch (GameQuitException e) {
             isCodeRunning = false;
         }
         while (isCodeRunning) {
@@ -72,23 +65,16 @@ public class Session {
                 taskHandler.shuffleCards();
                 taskHandler.fight();
             } catch (GameQuitException e) {
-                break;
+                isCodeRunning = false;
             } catch (GameLostException e) {
                 output.output(Message.LOST);
-                break;
+                isCodeRunning = false;
             } catch (GameWonException e) {
                 output.output(e.getMessage());
-                break;
+                isCodeRunning = false;
             }
         }
     }
-
-
-
-
-
-
-
 
 
 }

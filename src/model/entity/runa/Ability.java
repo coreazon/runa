@@ -6,9 +6,9 @@ import java.util.Objects;
 
 public class Ability {
 
+    private static final String FORMAT = "%s(%d)";
     private final Abilities ability;
     private final Score level;
-    private static final String FORMAT = "%s(%d)";
 
     public Ability(Abilities ability, Score level) {
         this.ability = ability;

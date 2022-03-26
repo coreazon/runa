@@ -1,9 +1,9 @@
 package model.entity.runa;
 
 public enum AbilityType {
-	
-	PHYSICAL,
-	MAGICAL,
-	NONE
+
+    PHYSICAL,
+    MAGICAL,
+    NONE
 
 }

@@ -27,6 +27,10 @@ public enum BossMobs {
         this.cards = cards;
     }
 
+    public static BossMobs getBoss(int level) {
+        return Arrays.stream(BossMobs.values()).filter(boss -> boss.getGameLevel() == level).findFirst().orElseThrow();
+    }
+
     public List<MonsterCard> getCards() {
         return cards;
     }
@@ -45,10 +49,6 @@ public enum BossMobs {
 
     public HealthPoints getHealthPoints() {
         return healthPoints;
-    }
-
-    public static BossMobs getBoss(int level) {
-        return Arrays.stream(BossMobs.values()).filter(boss -> boss.getGameLevel() == level).findFirst().orElseThrow();
     }
 
 }

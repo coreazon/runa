@@ -5,7 +5,6 @@ import core.Input;
 import core.Output;
 import core.Pair;
 import errors.CharacterClassException;
-import errors.Errors;
 import errors.GameLostException;
 import errors.GameQuitException;
 import errors.GameWonException;
@@ -45,11 +44,11 @@ public class TaskHandler {
 
     private final Input input;
     private final Output output;
-    private  Runa runa;
     private final CommandParserExecute parser;
-    private Queue<Monster> monsters;
     private final GameLevel gameLevel;
     private final ArrayList<Ability> cardDeck;
+    private Runa runa;
+    private Queue<Monster> monsters;
 
     public TaskHandler(Input input, Output output, CommandParserExecute parser) {
         this.input = input;
@@ -74,10 +73,10 @@ public class TaskHandler {
                 var inputUser = input.read();
                 parser.checkQuitParser(inputUser);
                 runaClass = parser.parseClass(inputUser);
-            } catch (CharacterClassException e){
+            } catch (CharacterClassException e) {
                 output.output(String.format(Message.ENTER_NUMBER, RunaClass.values().length));
             }
-        }while(runaClass ==  null);
+        } while (runaClass == null);
         return runaClass;
     }
 
@@ -91,10 +90,10 @@ public class TaskHandler {
             parser.checkQuitParser(userInput);
             try {
                 seeds = parser.parseSeeds(userInput);
-            } catch (SeedNotFoundException e){
+            } catch (SeedNotFoundException e) {
                 output.output(Message.ENTER_SEEDS);
             }
-        }while(seeds == null);
+        } while (seeds == null);
 
         //TODO: change both lists according to their types
         var mobsList = Mobs.getMobsFromGameLevel(gameLevel.getGameLevel());
@@ -124,7 +123,7 @@ public class TaskHandler {
      */
     public boolean fight() throws GameQuitException, GameLostException, GameWonException {
         var inLevel = true;
-        while(inLevel) {
+        while (inLevel) {
 
             output.output(String.format(Message.ENTER_STAGE, gameLevel.getGameRoom(), gameLevel.getGameLevel()));
             var monstersInRoom = getMobsForRoom();
@@ -167,7 +166,7 @@ public class TaskHandler {
         var outputBuilder = new StringBuilder();
         for (int i = 0; i < size; i++) {
             if (cardDeck.isEmpty()) break;
-            outputBuilder.append(String.format(Message.CARDS_LISTED, i+1, cardDeck.get(i).toString()));
+            outputBuilder.append(String.format(Message.CARDS_LISTED, i + 1, cardDeck.get(i).toString()));
             outputBuilder.append("\n");
         }
         return outputBuilder.length() > 0 ? outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString() : outputBuilder.toString();
@@ -186,8 +185,7 @@ public class TaskHandler {
             runa.addCard(cardDeck.get(card - 1));
             output.output(String.format(Message.UPGRADE, cardDeck.get(card - 1).toString()));
             cardDeck.remove(card - 1);
-        }
-        else {
+        } else {
             output.output(String.format(Message.PICK_CARDS, 2, getCardsForReward(4)));
             int[] card;
             do {
@@ -201,7 +199,7 @@ public class TaskHandler {
                 runa.addCard(cardDeck.get(ability - 1));
                 list.add(cardDeck.get(ability - 1));
             });
-            list.forEach(ability ->  output.output(String.format(Message.UPGRADE, ability.toString())));
+            list.forEach(ability -> output.output(String.format(Message.UPGRADE, ability.toString())));
             list.forEach(cardDeck::remove);
         }
     }
@@ -212,8 +210,7 @@ public class TaskHandler {
         //check if runa can get better dice
         if (runa.getDice().getSides() == 12) {
             chooseCard();
-        }
-        else {
+        } else {
             int reward;
             do {
                 output.output(String.format(Message.ENTER_NUMBER, 2));
@@ -221,10 +218,9 @@ public class TaskHandler {
                 parser.checkQuitParser(userInput);
                 reward = parser.parseNumber(userInput, 2);
             } while (reward == 0);
-            if (reward == 1){
+            if (reward == 1) {
                 output.output(runa.newDice());
-            }
-            else {
+            } else {
                 chooseCard();
             }
         }
@@ -240,10 +236,9 @@ public class TaskHandler {
             if (card.getCard().isBreakFocus() && runa.getFocusCard() != null) runa.setFocusCard(null);
             if (card.getCard().getAttackType() == AttackType.ATTACK) {
                 runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster);
-            }
-            else if (card.getCard().getAttackType() == AttackType.DEFENSE) {
+            } else if (card.getCard().getAttackType() == AttackType.DEFENSE) {
                 monster.setDefenseCard(card);
-            }else {
+            } else {
                 monster.setFocusCard(card);
             }
             monster.reduceFocusPoints(card);
@@ -260,14 +255,15 @@ public class TaskHandler {
     private void focusPointsTurnMonster(List<Monster> monstersInRoom) {
         monstersInRoom.stream().filter(monster -> monster.getFocusCard() != null)
                 .collect(Collectors.toList()).forEach(monster -> {
-                    monster.getFocusPoints().setFocusPoints(monster.getFocusCard().getLevel().getNumber());
-                    monster.setFocusCard(null);
+            monster.getFocusPoints().setFocusPoints(monster.getFocusCard().getLevel().getNumber());
+            monster.setFocusCard(null);
         });
     }
 
     private List<Monster> getMobsForRoom() {
         LinkedList<Monster> list = new LinkedList<>();
-        if (gameLevel.getGameRoom() == 4) list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel()), new FocusPoints(gameLevel.getGameLevel())));
+        if (gameLevel.getGameRoom() == 4)
+            list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel()), new FocusPoints(gameLevel.getGameLevel())));
         else if (gameLevel.getGameRoom() == 1) list.add(this.monsters.poll());
         else {
             var firstMob = this.monsters.poll();
@@ -290,7 +286,7 @@ public class TaskHandler {
             cardIndex = parser.parseNumber(userInput, runa.getMaxCardsChoice());
             card = runa.getCard(cardIndex);
             if (!runa.canPlayCard(card)) cardIndex = 0;
-        }while(cardIndex == 0);
+        } while (cardIndex == 0);
         //optional need monster to attack
         if (monstersInRoom.size() != 1 && card.getAbility().getAttackType() == AttackType.ATTACK) {
             output.output(String.format(Message.PICK_TARGET, getMonstersInRoomToString(monstersInRoom)));
@@ -300,10 +296,9 @@ public class TaskHandler {
                 var userInput = input.read();
                 parser.checkQuitParser(userInput);
                 mobIndex = parser.parseNumber(userInput, monstersInRoom.size());
-            } while(mobIndex == 0);
+            } while (mobIndex == 0);
             runaAttack(monstersInRoom.get(mobIndex), card);
-        }
-        else {
+        } else {
             runaAttack(monstersInRoom.get(0), card);
         }
         reduceFocusPoints(card);
@@ -323,16 +318,15 @@ public class TaskHandler {
         if (card.getAbility().isBreakFocus() && target.getFocusCard() != null) target.setFocusCard(null);
         if (card.getAbility().getAttackType() == AttackType.ATTACK) {
             target.takeDamage(card.getAbility().calculateDamage(card.getLevel(), runa.getDice(), runa.getFocusPoints(), target.getType()), card.getAbility().getAbilityType());
-        }
-        else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
+        } else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
             runa.setDefenseCard(card);
-        }else {
+        } else {
             runa.setFocusCard(card);
         }
     }
 
     private void hasLost() throws GameLostException {
-        if (runa.getHealthPoints().getHealthPoints() <= 0 ) throw new GameLostException(Errors.GAME_OVER);
+        if (runa.getHealthPoints().getHealthPoints() <= 0) throw new GameLostException(Message.LOST);
     }
 
     private boolean monsterIsAlive(List<Monster> monstersInRoom) {
@@ -342,6 +336,7 @@ public class TaskHandler {
 
     /**
      * update the gamelevel to the next level
+     *
      * @throws
      */
     private void nextLevel() throws GameWonException {
@@ -357,8 +352,7 @@ public class TaskHandler {
         if (gameLevel.getGameRoom() == 4) {
             gameLevel.setGameRoom(1);
             return false;
-        }
-        else {
+        } else {
             gameLevel.setGameRoom(gameLevel.getGameRoom() + 1);
             return true;
         }
@@ -375,27 +369,26 @@ public class TaskHandler {
         if (runa.getHealthPoints().getHealthPoints() == 50 || runa.getAbilities().size() == 1) return;
         if (runa.getAbilities().size() == 2) {
             int heal;
-                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
+            output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
             do {
                 output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
                 parser.checkQuitParser(inputUser);
                 heal = parser.parseNumber(inputUser, runa.getAbilities().size());
 
-            }while (heal == 0);
+            } while (heal == 0);
             runa.discardCard(new int[]{heal});
             runa.heal();
-        }
-        else {
+        } else {
             int[] heal;
-                output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
+            output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
             do {
                 output.output(String.format(Message.ENTER_MULTIPLE_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
                 parser.checkQuitParser(inputUser);
                 heal = parser.parseNumbers(inputUser, runa.getPossibleHealSize());
 
-            }while (heal == null);
+            } while (heal == null);
             runa.discardCard(heal);
         }
     }
