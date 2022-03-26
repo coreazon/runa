@@ -29,6 +29,7 @@ public final class Message {
     public static final String WON = "Runa won!";
     public static final String LOST = "Runa dies";
     public static final String ATTACK_USE = "Rua uses %s";
+    public static final String MOB_TOOK_DAMAGE = "%s takes %d %s damage";
 
     /**
      * Utility class constructor

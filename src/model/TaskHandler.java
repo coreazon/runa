@@ -103,7 +103,7 @@ public class TaskHandler {
         Collections.shuffle(mobsList, new Random(seeds.getSecondElement()));
 
         var listOfAbilities = new ArrayList<Ability>();
-        var listOfMonsters = new LinkedList<Monster>();
+        var listOfMonsters = new ArrayList<Monster>();
 
         abilities.forEach(ability -> listOfAbilities.add(new Ability(ability, new Score(gameLevel.getGameLevel()))));
         mobsList.forEach(monster -> listOfMonsters.add(new RegularMonster(monster, new FocusPoints(gameLevel.getGameLevel()))));
@@ -138,7 +138,7 @@ public class TaskHandler {
                 //first runa
                 turnOfRuna(monstersInRoom);
                 //check if won
-                if (monsterIsAlive(monstersInRoom)) break;
+                if (!monsterIsAlive(monstersInRoom)) break;
                 //fp of runa
                 focusPointsTurnRuna();
                 //every mob
@@ -240,7 +240,7 @@ public class TaskHandler {
 
     private void turnOfMonsters(List<Monster> monstersInRoom) {
         monstersInRoom.forEach(monster -> {
-            var card = monster.getCards().remove(0);
+            var card = monster.poll();
             if (card.getCard().isBreakFocus() && runa.getFocusCard() != null) runa.setFocusCard(null);
             if (card.getCard().getAttackType() == AttackType.ATTACK) {
                 runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster);
@@ -292,7 +292,7 @@ public class TaskHandler {
             var userInput = input.read();
             parser.checkQuitParser(userInput);
             cardIndex = parser.parseNumber(userInput, runa.getMaxCardsChoice());
-            card = runa.getCard(cardIndex);
+            card = runa.getCard(cardIndex - 1);
             if (!runa.canPlayCard(card)) {
                 cardIndex = 0;
             }
@@ -328,9 +328,11 @@ public class TaskHandler {
     private void runaAttack(Monster target, Ability card) throws GameQuitException {
         if (card.getAbility().isBreakFocus() && target.getFocusCard() != null) target.setFocusCard(null);
         if (card.getAbility().getAttackType() == AttackType.ATTACK) {
-            target.takeDamage(card.getAbility().calculateDamage(card.getLevel()
-                    , card.getAbility().isNeedRoll() ? new Score(enterRoll()) : new Score(0)
-                    , runa.getFocusPoints(), target.getType()), card.getAbility().getAbilityType());
+            var dmg = target.takeDamage(card.getAbility().calculateDamage(card.getLevel()
+                        , card.getAbility().isNeedRoll() ? new Score(enterRoll()) : new Score(0)
+                        , runa.getFocusPoints(), target.getType())
+                    , card.getAbility().getAbilityType());
+            output.output(String.format(Message.MOB_TOOK_DAMAGE, target.getName(), dmg, card.getAbility().getAbilityType().getRepresentation()));
         } else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
             runa.setDefenseCard(card);
         } else {

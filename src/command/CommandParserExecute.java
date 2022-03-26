@@ -46,6 +46,7 @@ public class CommandParserExecute implements CommandParser {
 
     public Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException {
         if (!input.matches(REGEX_NUMBERS)) throw new SeedNotFoundException();
+        if (!input.contains(SEED_SEPARATOR)) throw new SeedNotFoundException();
         var seeds = input.split(SEED_SEPARATOR);
         return new Pair<>(Integer.parseInt(seeds[0]), Integer.parseInt(seeds[1]));
     }

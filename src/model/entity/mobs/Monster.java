@@ -4,12 +4,13 @@ import model.entity.FocusPoints;
 import model.entity.HealthPoints;
 import model.entity.runa.AbilityType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Monster {
 
     private final HealthPoints healthPoints;
-    private final List<MonsterCard> cards;
+    private final ArrayList<MonsterCard> cards;
     private final Type type;
     private final FocusPoints focusPoints;
     private final String name;
@@ -17,7 +18,7 @@ public class Monster {
     private MonsterCard defenseCard;
     private static final String TO_STRING_FORMAT = "%s (%d HP, %d FP): attempts %s next";
 
-    public Monster(String name, HealthPoints healthPoints, FocusPoints focusPoints, List<MonsterCard> cards, Type type) {
+    public Monster(String name, HealthPoints healthPoints, FocusPoints focusPoints, ArrayList<MonsterCard> cards, Type type) {
         this.healthPoints = healthPoints;
         this.focusCard = null;
         this.type = type;
@@ -47,6 +48,10 @@ public class Monster {
         return cards;
     }
 
+    public MonsterCard poll() {
+        return cards.remove(0);
+    }
+
     public MonsterCard getFocusCard() {
         return focusCard;
     }
@@ -59,13 +64,14 @@ public class Monster {
         return healthPoints;
     }
 
-    public void takeDamage(HealthPoints damage, AbilityType type) {
+    public int takeDamage(HealthPoints damage, AbilityType type) {
         if (defenseCard != null) {
             if (defenseCard.getCard().getDefense() == type)
                 damage.shieldDamage(defenseCard.getCard().calculateDamage(defenseCard.getLevel()));
             this.defenseCard = null;
         }
         healthPoints.takeDamage(damage);
+        return damage.getHealthPoints();
     }
 
     public void takeDirectHit(HealthPoints damage) {

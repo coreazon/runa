@@ -1,6 +1,5 @@
 package model.entity.runa;
 
-import errors.GameQuitException;
 import message.Message;
 import model.dice.Dice;
 import model.entity.FocusPoints;
@@ -64,9 +63,9 @@ public class Runa {
 
     public void takeDamage(HealthPoints damage, AbilityType type, Monster target) {
         if (defenseCard != null && defenseCard.getAbility().getDefense() == type) {
-            damage.shieldDamage(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), this.getDice(), this.focusPoints, target.getType()));
+            damage.shieldDamage(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), new Score(0), this.focusPoints, target.getType()));
             if (defenseCard.getAbility() == Abilities.REFLECT) {
-                target.takeDirectHit(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), this.getDice(), this.focusPoints, target.getType()));
+                target.takeDirectHit(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), new Score(0), this.focusPoints, target.getType()));
             }
 
             this.defenseCard = null;
