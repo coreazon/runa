@@ -137,12 +137,14 @@ public class TaskHandler {
 
                 //first runa
                 turnOfRuna(monstersInRoom);
+                getRidOfDeadMobs(monstersInRoom);
                 //check if won
                 if (!monsterIsAlive(monstersInRoom)) break;
                 //fp of mobs
                 focusPointsTurnMonster(monstersInRoom);
                 //every mob
                 turnOfMonsters(monstersInRoom);
+                getRidOfDeadMobs(monstersInRoom);
                 //check if lost
                 hasLost();
                 //fp of runa
@@ -150,8 +152,9 @@ public class TaskHandler {
 
             }
 
-            heal();
+
             if (gameLevel.getGameRoom() != 4) reward();
+            heal();
             inLevel = nextRoom();
         }
         //check if won the game
@@ -161,6 +164,12 @@ public class TaskHandler {
         //heal player
 
         nextLevel();
+    }
+
+    private void getRidOfDeadMobs(List<Monster> monstersInRoom) {
+        monstersInRoom.forEach(mob -> {
+            if (mob.isDead()) monstersInRoom.remove(mob);
+        });
     }
 
     private void giveRunaCards() {
@@ -193,20 +202,26 @@ public class TaskHandler {
             runa.addCard(cardDeck.get(card - 1));
             output.output(String.format(Message.UPGRADE, cardDeck.get(card - 1).toString()));
             cardDeck.remove(card - 1);
+            cardDeck.remove(0);
         } else {
             output.output(String.format(Message.PICK_CARDS, 2, getCardsForReward(4)));
             int[] card;
             do {
-                output.output(String.format(Message.ENTER_NUMBER, Math.min(cardDeck.size(), 4)));
+                output.output(String.format(Message.ENTER_MULTIPLE_NUMBER, Math.min(cardDeck.size(), 4)));
                 var userInput = input.read();
                 parser.checkQuitParser(userInput);
-                card = parser.parseNumbers(userInput, Math.min(cardDeck.size(), 4));
+                card = parser.parseNumbers(userInput, Math.min(cardDeck.size(), 4), 2);
             } while (card == null);
             var list = new ArrayList<Ability>();
             Arrays.stream(card).forEach(ability -> {
                 runa.addCard(cardDeck.get(ability - 1));
                 list.add(cardDeck.get(ability - 1));
             });
+            Arrays.sort(card);
+            cardDeck.remove(card[0]);
+            cardDeck.remove(card[1] - 1);
+            cardDeck.remove(0);
+            cardDeck.remove(0);
             list.forEach(ability -> output.output(String.format(Message.UPGRADE, ability.toString())));
             list.forEach(cardDeck::remove);
         }
@@ -253,12 +268,14 @@ public class TaskHandler {
             }
             monster.reduceFocusPoints(card);
             if (monster.getHealthPoints().getHealthPoints() <= 0) output.output(String.format(Message.MOB_DIED, monster.getName()));
+            monster.addBack(card);
         });
     }
 
     private void focusPointsTurnRuna() {
         if (runa.getFocusCard() == null) return;
         var focusPoints = runa.getFocusCard().getLevel().getNumber();
+        output.output(String.format(Message.RUNA_FOCUS, focusPoints));
         runa.getFocusPoints().setFocusPoints(Math.min(focusPoints + runa.getFocusPoints().getFocusPoints(), runa.getDice().getSides()));
         runa.setFocusCard(null);
     }
@@ -267,6 +284,7 @@ public class TaskHandler {
         monstersInRoom.stream().filter(monster -> monster.getFocusCard() != null)
                 .collect(Collectors.toList()).forEach(monster -> {
             monster.getFocusPoints().setFocusPoints(monster.getFocusCard().getLevel().getNumber());
+            output.output(String.format(Message.MOB_FOCUS,monster.getName() , monster.getFocusCard().getLevel().getNumber()));
             monster.setFocusCard(null);
         });
     }
@@ -303,7 +321,7 @@ public class TaskHandler {
 
         } while (cardIndex == 0);
         card = runa.getCard(cardIndex - 1);
-        output.output(String.format(Message.ATTACK_USE, card));
+
         //optional need monster to attack
         if (monstersInRoom.size() != 1 && card.getAbility().getAttackType() == AttackType.ATTACK) {
             output.output(String.format(Message.PICK_TARGET, getMonstersInRoomToString(monstersInRoom)));
@@ -314,7 +332,7 @@ public class TaskHandler {
                 parser.checkQuitParser(userInput);
                 mobIndex = parser.parseNumber(userInput, monstersInRoom.size());
             } while (mobIndex == 0);
-            runaAttack(monstersInRoom.get(mobIndex), card);
+            runaAttack(monstersInRoom.get(mobIndex - 1), card);
         } else {
             runaAttack(monstersInRoom.get(0), card);
         }
@@ -333,6 +351,7 @@ public class TaskHandler {
     }
 
     private void runaAttack(Monster target, Ability card) throws GameQuitException {
+        output.output(String.format(Message.ATTACK_USE, card));
         if (card.getAbility().isBreakFocus() && target.getFocusCard() != null) target.setFocusCard(null);
         if (card.getAbility().getAttackType() == AttackType.ATTACK) {
             var dmg = target.takeDamage(card.getAbility().calculateDamage(card.getLevel()
@@ -400,7 +419,7 @@ public class TaskHandler {
         if (runa.getHealthPoints().getHealthPoints() == 50 || runa.getAbilities().size() == 1) return;
         if (runa.getAbilities().size() == 2) {
             int heal;
-            output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
+            output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getCardsInfo()));
             do {
                 output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
@@ -409,18 +428,24 @@ public class TaskHandler {
 
             } while (heal == 0);
             runa.discardCard(new int[]{heal});
+            var healthBefore = runa.getHealthPoints().getHealthPoints();
             runa.heal();
+            output.output(String.format(Message.HEALED, runa.getHealthPoints().getHealthPoints() - healthBefore));
         } else {
             int[] heal;
-            output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getMaxCardsChoice()));
+            output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getCardsInfo()));
             do {
                 output.output(String.format(Message.ENTER_MULTIPLE_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
                 parser.checkQuitParser(inputUser);
-                heal = parser.parseNumbers(inputUser, runa.getPossibleHealSize());
+                heal = parser.parseHealNumbers(inputUser, runa.getMaxCardsChoice(), runa.getPossibleHealSize());
 
             } while (heal == null);
+            if (heal.length == 0) return;
+            var healthBefore = runa.getHealthPoints().getHealthPoints();
+            Arrays.stream(heal).forEach(card -> runa.heal());
             runa.discardCard(heal);
+            output.output(String.format(Message.HEALED, runa.getHealthPoints().getHealthPoints() - healthBefore));
         }
     }
 

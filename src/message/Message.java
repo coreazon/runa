@@ -35,6 +35,11 @@ public final class Message {
     public static final String MOB_ATTACK = "%s uses %s";
     public static final String MOB_DIED = "%s dies";
     public static final String RUNA_TOOK_DAMAGE = "Runa takes %d %s damage";
+    public static final String HEALED = "Runa gains %d health";
+    public static final String MOB_FOCUS = "%s gains %d focus";
+    public static final String RUNA_FOCUS = "Runa gains %d focus";
+
+
     /**
      * Utility class constructor
      */

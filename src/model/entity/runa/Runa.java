@@ -122,7 +122,7 @@ public class Runa {
 
     public void discardCard(int[] cardsToDiscard) {
         var listOfCardsToDiscard = new ArrayList<Ability>();
-        Arrays.stream(cardsToDiscard).forEach(card -> listOfCardsToDiscard.add(getAbilities().get(card)));
+        Arrays.stream(cardsToDiscard).forEach(card -> listOfCardsToDiscard.add(getAbilities().get(card - 1)));
         listOfCardsToDiscard.forEach(card -> getAbilities().remove(card));
     }
 

@@ -61,12 +61,26 @@ public class CommandParserExecute implements CommandParser {
     }
 
     @Override
-    public int[] parseNumbers(String input, int maxNumber) throws GameQuitException {
+    public int[] parseNumbers(String input, int maxNumber, int amountOfNumbers) throws GameQuitException {
         checkQuitParser(input);
         if (!input.matches(REGEX_NUMBERS)) return new int[0];
         int[] numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
-        if (numbers.length < maxNumber || duplicates(numbers)) return null;
+        if (numbers.length != amountOfNumbers || duplicates(numbers) || notInRange(numbers, maxNumber)) return null;
         return numbers;
+    }
+
+    @Override
+    public int[] parseHealNumbers(String input, int maxNumber, int amountOfMaxNumbers) throws GameQuitException {
+        checkQuitParser(input);
+        if (input.isEmpty()) return new int[0];
+        if (!input.matches(REGEX_NUMBERS)) return null;
+        int[] numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
+        if (numbers.length > amountOfMaxNumbers || duplicates(numbers) || notInRange(numbers, maxNumber)) return null;
+        return numbers;
+    }
+
+    private boolean notInRange(final int[] numbers, int maxNumber) {
+        return Arrays.stream(numbers).anyMatch(number -> number < 1 || number > maxNumber);
     }
 
     private boolean duplicates(final int[] numbers) {

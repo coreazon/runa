@@ -24,5 +24,7 @@ public interface CommandParser {
 
     int parseNumber(String input, int maxNumber) throws GameQuitException;
 
-    int[] parseNumbers(String input, int maxNumber) throws GameQuitException;
+    int[] parseNumbers(String input, int maxNumber, int amountOfNumbers) throws GameQuitException;
+
+    int[] parseHealNumbers(String input, int maxNumber, int amountOfMaxNumbers) throws GameQuitException;
 }

@@ -52,6 +52,10 @@ public class Monster {
         return cards.remove(0);
     }
 
+    public void addBack(MonsterCard card) {
+        cards.add(card);
+    }
+
     public MonsterCard getFocusCard() {
         return focusCard;
     }
@@ -85,6 +89,10 @@ public class Monster {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isDead() {
+        return this.healthPoints.getHealthPoints() <= 0;
     }
 
     @Override
