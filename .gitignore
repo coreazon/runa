@@ -1,4 +1,4 @@
 # ignore .ideas folder
 /.idea
 # ignore .out folder
-/.out
+/out
