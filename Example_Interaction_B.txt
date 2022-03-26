@@ -1,0 +1,182 @@
+%> java Runa
+Welcome to Runa's Strive
+Select Runa's character class
+1) Warrior
+2) Mage
+3) Paladin
+Enter number [1--3]:
+> 2
+To shuffle ability cards and monsters, enter two seeds
+Enter seeds [1--2147483647] separated by comma:
+> 42,24
+Runa enters Stage 1 of Level 1
+----------------------------------------
+Runa (50/50 HP, 1/4 FP)
+vs.
+Rat (14 HP, 0 FP): attempts Block(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+Enter number [1--2]:
+> 1
+Runa uses Focus(1)
+Rat uses Block(1)
+Runa gains 1 focus
+----------------------------------------
+Runa (50/50 HP, 2/4 FP)
+vs.
+Rat (14 HP, 0 FP): attempts Claw(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+Enter number [1--2]:
+> 2
+Runa uses Water(1)
+Rat takes 12 mag. damage
+Rat uses Claw(1)
+Runa takes 6 phy. damage
+----------------------------------------
+Runa (44/50 HP, 1/4 FP)
+vs.
+Rat (2 HP, 0 FP): attempts Block(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+Enter number [1--2]:
+> 2
+Runa uses Water(1)
+Rat takes 6 mag. damage
+Rat dies
+Choose Runa's reward
+1) new ability cards
+2) next player dice
+Enter number [1--2]:
+> 1
+Pick 1 card(s) as loot
+1) Parry(1)
+2) Swing(1)
+Enter number [1--2]:
+> 2
+Runa gets Swing(1)
+Runa (44/50 HP) can discard ability cards for healing (or none)
+1) Focus(1)
+2) Water(1)
+3) Swing(1)
+Enter numbers [1--3] separated by comma:
+> 
+Runa enters Stage 2 of Level 1
+----------------------------------------
+Runa (44/50 HP, 1/4 FP)
+vs.
+Skeleton (14 HP, 0 FP): attempts Focus(1) next
+Ghost (15 HP, 0 FP): attempts Focus(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+3) Swing(1)
+Enter number [1--3]:
+> 3
+Select Runa's target.
+1) Skeleton
+2) Ghost
+Enter number [1--2]:
+> 1
+Runa uses Swing(1)
+Enter dice roll [1--4]:
+> 4
+Skeleton takes 9 phy. damage
+Skeleton uses Focus(1)
+Ghost uses Focus(1)
+----------------------------------------
+Runa (44/50 HP, 1/4 FP)
+vs.
+Skeleton (5 HP, 0 FP): attempts Lightning(1) next
+Ghost (15 HP, 0 FP): attempts Ice(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+3) Swing(1)
+Enter number [1--3]:
+> 1
+Runa uses Focus(1)
+Skeleton gains 1 focus
+Ghost gains 1 focus
+Skeleton uses Lightning(1)
+Runa takes 16 mag. damage
+Ghost uses Ice(1)
+Runa takes 12 mag. damage
+Runa gains 1 focus
+----------------------------------------
+Runa (16/50 HP, 2/4 FP)
+vs.
+Skeleton (5 HP, 0 FP): attempts Focus(1) next
+Ghost (15 HP, 0 FP): attempts Focus(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+3) Swing(1)
+Enter number [1--3]:
+> 1
+Runa uses Focus(1)
+Skeleton uses Focus(1)
+Ghost uses Focus(1)
+Runa gains 1 focus
+----------------------------------------
+Runa (16/50 HP, 3/4 FP)
+vs.
+Skeleton (5 HP, 0 FP): attempts Lightning(1) next
+Ghost (15 HP, 0 FP): attempts Ice(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+3) Swing(1)
+Enter number [1--3]:
+> 2
+Select Runa's target.
+1) Skeleton
+2) Ghost
+Enter number [1--2]:
+> 1
+Runa uses Water(1)
+Skeleton takes 20 mag. damage
+Skeleton dies
+Ghost gains 1 focus
+Ghost uses Ice(1)
+Runa takes 12 mag. damage
+----------------------------------------
+Runa (4/50 HP, 2/4 FP)
+vs.
+Ghost (15 HP, 0 FP): attempts Focus(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+3) Swing(1)
+Enter number [1--3]:
+> 1
+Runa uses Focus(1)
+Ghost uses Focus(1)
+Runa gains 1 focus
+----------------------------------------
+Runa (4/50 HP, 3/4 FP)
+vs.
+Ghost (15 HP, 0 FP): attempts Ice(1) next
+----------------------------------------
+Select card to play
+1) Focus(1)
+2) Water(1)
+3) Swing(1)
+Enter number [1--3]:
+> 1
+Runa uses Focus(1)
+Ghost gains 1 focus
+Ghost uses Ice(1)
+Runa takes 12 mag. damage
+Runa dies
