@@ -5,6 +5,6 @@ import model.entity.Score;
 
 public interface DamageCalculatorMob {
 
-    abstract HealthPoints calculateDamage(Score level);
+    HealthPoints calculateDamage(Score level);
 
 }

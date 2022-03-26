@@ -61,7 +61,7 @@ public class Runa {
         return focusPoints;
     }
 
-    public void takeDamage(HealthPoints damage, AbilityType type, Monster target) {
+    public HealthPoints takeDamage(HealthPoints damage, AbilityType type, Monster target) {
         if (defenseCard != null && defenseCard.getAbility().getDefense() == type) {
             damage.shieldDamage(defenseCard.getAbility().calculateDamage(defenseCard.getLevel(), new Score(0), this.focusPoints, target.getType()));
             if (defenseCard.getAbility() == Abilities.REFLECT) {
@@ -70,9 +70,8 @@ public class Runa {
 
             this.defenseCard = null;
         }
-        healthPoints.takeDamage(damage);
-
         getHealthPoints().takeDamage(damage);
+        return damage;
     }
 
     public List<Ability> getAbilities() {

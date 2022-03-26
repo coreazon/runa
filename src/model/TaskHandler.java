@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -80,7 +81,7 @@ public class TaskHandler {
         return runaClass;
     }
 
-    public boolean shuffleCards() throws GameQuitException {
+    public void shuffleCards() throws GameQuitException {
 
         output.output(Message.SHUFFLE_MESSAGE);
         output.output(Message.ENTER_SEEDS);
@@ -105,12 +106,11 @@ public class TaskHandler {
         var listOfMonsters = new ArrayList<Monster>();
 
         abilities.forEach(ability -> listOfAbilities.add(new Ability(ability, new Score(gameLevel.getGameLevel()))));
-        mobsList.forEach(monster -> listOfMonsters.add(new RegularMonster(monster, new FocusPoints(gameLevel.getGameLevel()))));
+        mobsList.forEach(monster -> listOfMonsters.add(new RegularMonster(monster, new FocusPoints(0))));
 
         this.monsters = new LinkedList<>(listOfMonsters);
         cardDeck = (new ArrayList<>(listOfAbilities));
 
-        return true;
     }
 
     /**
@@ -139,14 +139,14 @@ public class TaskHandler {
                 turnOfRuna(monstersInRoom);
                 //check if won
                 if (!monsterIsAlive(monstersInRoom)) break;
-                //fp of runa
-                focusPointsTurnRuna();
+                //fp of mobs
+                focusPointsTurnMonster(monstersInRoom);
                 //every mob
                 turnOfMonsters(monstersInRoom);
                 //check if lost
                 hasLost();
-                //fp of mobs
-                focusPointsTurnMonster(monstersInRoom);
+                //fp of runa
+                focusPointsTurnRuna();
 
             }
 
@@ -227,9 +227,9 @@ public class TaskHandler {
                 reward = parser.parseNumber(userInput, 2);
             } while (reward == 0);
             if (reward == 1) {
-                output.output(runa.newDice());
-            } else {
                 chooseCard();
+            } else {
+                output.output(runa.newDice());
             }
         }
     }
@@ -241,15 +241,18 @@ public class TaskHandler {
     private void turnOfMonsters(List<Monster> monstersInRoom) {
         monstersInRoom.forEach(monster -> {
             var card = monster.poll();
+            output.output(String.format(Message.MOB_ATTACK, monster.getName(), card));
             if (card.getCard().isBreakFocus() && runa.getFocusCard() != null) runa.setFocusCard(null);
             if (card.getCard().getAttackType() == AttackType.ATTACK) {
-                runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster);
+                var damage = runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster);
+                if (damage.getHealthPoints() > 0) output.output(String.format(Message.RUNA_TOOK_DAMAGE, damage.getHealthPoints(), card.getCard().getType().getRepresentation()));
             } else if (card.getCard().getAttackType() == AttackType.DEFENSE) {
                 monster.setDefenseCard(card);
             } else {
                 monster.setFocusCard(card);
             }
             monster.reduceFocusPoints(card);
+            if (monster.getHealthPoints().getHealthPoints() <= 0) output.output(String.format(Message.MOB_DIED, monster.getName()));
         });
     }
 
@@ -283,6 +286,11 @@ public class TaskHandler {
     }
 
     private void turnOfRuna(List<Monster> monstersInRoom) throws GameQuitException {
+        //TODO: fix that
+//        if (!runa.canPlayCard(card)) {
+//            cardIndex = 0;
+//        }
+
         //first need attack from user
         output.output(String.format(Message.RUNA_CARDS, runa.getCardsInfo()));
         int cardIndex;
@@ -292,11 +300,9 @@ public class TaskHandler {
             var userInput = input.read();
             parser.checkQuitParser(userInput);
             cardIndex = parser.parseNumber(userInput, runa.getMaxCardsChoice());
-            card = runa.getCard(cardIndex - 1);
-            if (!runa.canPlayCard(card)) {
-                cardIndex = 0;
-            }
+
         } while (cardIndex == 0);
+        card = runa.getCard(cardIndex - 1);
         output.output(String.format(Message.ATTACK_USE, card));
         //optional need monster to attack
         if (monstersInRoom.size() != 1 && card.getAbility().getAttackType() == AttackType.ATTACK) {
@@ -321,7 +327,8 @@ public class TaskHandler {
 
     private String getMonstersInRoomToString(List<Monster> monstersInRoom) {
         var outputBuilder = new StringBuilder();
-        monstersInRoom.forEach(mob -> outputBuilder.append(mob.toString()).append("\n"));
+        var i = new AtomicInteger();
+        monstersInRoom.forEach(mob -> outputBuilder.append(String.format(Message.CARDS_LISTED, i.incrementAndGet(), mob.getName())).append("\n"));
         return outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString();
     }
 
@@ -338,6 +345,7 @@ public class TaskHandler {
         } else {
             runa.setFocusCard(card);
         }
+        if (target.getHealthPoints().getHealthPoints() <= 0) output.output(String.format(Message.MOB_DIED, target.getName()));
     }
 
     private void hasLost() throws GameLostException {

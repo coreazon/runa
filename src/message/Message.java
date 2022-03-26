@@ -2,6 +2,8 @@ package message;
 
 import model.entity.runa.RunaClass;
 
+import java.util.Locale;
+
 public final class Message {
 
     public static final String WELCOME_MESSAGE = "Welcome to Runa's Strive\nSelect Runa's character class\n"
@@ -23,14 +25,16 @@ public final class Message {
     public static final String REWARD = "Choose Runa's reward\n" +
             "1) new ability cards\n" +
             "2) next player dice";
-    public static final String DICE_UPGRADE = "upgrades her die to a %d.";
+    public static final String DICE_UPGRADE = "Runa upgrades her die to a d%d.";
     public static final String PICK_CARDS = "Pick %d card(s) as loot\n%s";
     public static final String CARDS_LISTED = "%d) %s";
     public static final String WON = "Runa won!";
     public static final String LOST = "Runa dies";
-    public static final String ATTACK_USE = "Rua uses %s";
+    public static final String ATTACK_USE = "Runa uses %s";
     public static final String MOB_TOOK_DAMAGE = "%s takes %d %s damage";
-
+    public static final String MOB_ATTACK = "%s uses %s";
+    public static final String MOB_DIED = "%s dies";
+    public static final String RUNA_TOOK_DAMAGE = "Runa takes %d %s damage";
     /**
      * Utility class constructor
      */
