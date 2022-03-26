@@ -7,7 +7,7 @@ public class BossMonster extends Monster {
     private final BossMobs boss;
 
     public BossMonster(BossMobs boss, FocusPoints focusPoints) {
-        super(boss.getHealthPoints(), focusPoints, boss.getCards(), boss.getType());
+        super(boss.getRepresentation(), boss.getHealthPoints(), focusPoints, boss.getCards(), boss.getType());
         this.boss = boss;
     }
 

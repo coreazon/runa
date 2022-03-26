@@ -12,7 +12,7 @@ public enum Mobs {
     GHOST("Ghost", Type.ICE, 1, new HealthPoints(15), List.of(new MonsterCard(MonsterCards.FOCUS, new Score(1)), new MonsterCard(MonsterCards.ICE, new Score(1)))),
     GORGON("Gorgon", Type.FIRE, 1, new HealthPoints(13), List.of(new MonsterCard(MonsterCards.FOCUS, new Score(1)), new MonsterCard(MonsterCards.FIRE, new Score(1)))),
     SKELETON("Skeleton", Type.LIGHTNING, 1, new HealthPoints(14), List.of(new MonsterCard(MonsterCards.FOCUS, new Score(1)), new MonsterCard(MonsterCards.LIGHTNING, new Score(1)))),
-    SPIDER("Spide", Type.NONE, 1, new HealthPoints(15), List.of(new MonsterCard(MonsterCards.BITE, new Score(1)), new MonsterCard(MonsterCards.BLOCK, new Score(1)))),
+    SPIDER("Spider", Type.NONE, 1, new HealthPoints(15), List.of(new MonsterCard(MonsterCards.BITE, new Score(1)), new MonsterCard(MonsterCards.BLOCK, new Score(1)))),
     GOBLIN("Goblin", Type.NONE, 1, new HealthPoints(12), List.of(new MonsterCard(MonsterCards.SMASH, new Score(1)), new MonsterCard(MonsterCards.DEFLECT, new Score(1)))),
     RAT("Rat", Type.NONE, 1, new HealthPoints(14), List.of(new MonsterCard(MonsterCards.BLOCK, new Score(1)), new MonsterCard(MonsterCards.CLAW, new Score(1)))),
     MUSHROOMLIN("Mushroomlin", Type.NONE, 1, new HealthPoints(20), List.of(new MonsterCard(MonsterCards.DEFLECT, new Score(1)), new MonsterCard(MonsterCards.SCRATCH, new Score(1)))),

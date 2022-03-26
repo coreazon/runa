@@ -8,5 +8,5 @@ import model.entity.mobs.Type;
 
 public interface DamageCalculatorRuna {
 
-    abstract HealthPoints calculateDamage(Score level, Dice dice, FocusPoints focusPoints, Type targetType);
+    abstract HealthPoints calculateDamage(Score level, Score dice, FocusPoints focusPoints, Type targetType);
 }

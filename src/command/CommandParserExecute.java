@@ -45,7 +45,7 @@ public class CommandParserExecute implements CommandParser {
     }
 
     public Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException {
-        if (!input.matches(REGEX_SEEDS)) throw new SeedNotFoundException();
+        if (!input.matches(REGEX_NUMBERS)) throw new SeedNotFoundException();
         var seeds = input.split(SEED_SEPARATOR);
         return new Pair<>(Integer.parseInt(seeds[0]), Integer.parseInt(seeds[1]));
     }
@@ -62,7 +62,7 @@ public class CommandParserExecute implements CommandParser {
     @Override
     public int[] parseNumbers(String input, int maxNumber) throws GameQuitException {
         checkQuitParser(input);
-        if (!input.matches(REGEX_NUMBERS)) return null;
+        if (!input.matches(REGEX_NUMBERS)) return new int[0];
         int[] numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
         if (numbers.length < maxNumber || duplicates(numbers)) return null;
         return numbers;

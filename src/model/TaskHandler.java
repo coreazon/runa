@@ -46,7 +46,7 @@ public class TaskHandler {
     private final Output output;
     private final CommandParserExecute parser;
     private final GameLevel gameLevel;
-    private final ArrayList<Ability> cardDeck;
+    private ArrayList<Ability> cardDeck;
     private Runa runa;
     private Queue<Monster> monsters;
 
@@ -109,7 +109,7 @@ public class TaskHandler {
         mobsList.forEach(monster -> listOfMonsters.add(new RegularMonster(monster, new FocusPoints(gameLevel.getGameLevel()))));
 
         this.monsters = new LinkedList<>(listOfMonsters);
-        runa.setAbilities(new ArrayList<>(listOfAbilities));
+        cardDeck = (new ArrayList<>(listOfAbilities));
 
         return true;
     }
@@ -117,12 +117,14 @@ public class TaskHandler {
     /**
      * handles the fighting section of the game.
      *
-     * @return true as long as runa did not won the game
      * @throws GameQuitException if runa quits the game
      * @throws GameLostException if runa lost the game
      */
-    public boolean fight() throws GameQuitException, GameLostException, GameWonException {
+    public void fight() throws GameQuitException, GameLostException, GameWonException {
         var inLevel = true;
+
+        giveRunaCards();
+
         while (inLevel) {
 
             output.output(String.format(Message.ENTER_STAGE, gameLevel.getGameRoom(), gameLevel.getGameLevel()));
@@ -130,7 +132,7 @@ public class TaskHandler {
 
             //as long as in the same room
             while (true) {
-                output.output(getBattleInformation());
+                output.output(getBattleInformation(monstersInRoom));
 
 
                 //first runa
@@ -153,13 +155,19 @@ public class TaskHandler {
             inLevel = nextRoom();
         }
         //check if won the game
-        if (gameLevel.getGameLevel() == 2) return false;
+        if (gameLevel.getGameLevel() == 2) throw new GameWonException(Message.WON);
         //check rewards
         upgrade();
         //heal player
 
         nextLevel();
-        return true;
+    }
+
+    private void giveRunaCards() {
+        var spells = runa.getClassOfRuna().getAbilities();
+        var abilitiesList = new ArrayList<Ability>();
+        spells.forEach(ability -> abilitiesList.add(new Ability(ability, new Score(gameLevel.getGameLevel()))));
+        runa.setAbilities(abilitiesList);
     }
 
     private String getCardsForReward(int size) {
@@ -263,7 +271,7 @@ public class TaskHandler {
     private List<Monster> getMobsForRoom() {
         LinkedList<Monster> list = new LinkedList<>();
         if (gameLevel.getGameRoom() == 4)
-            list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel()), new FocusPoints(gameLevel.getGameLevel())));
+            list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel()), new FocusPoints(0)));
         else if (gameLevel.getGameRoom() == 1) list.add(this.monsters.poll());
         else {
             var firstMob = this.monsters.poll();
@@ -285,8 +293,11 @@ public class TaskHandler {
             parser.checkQuitParser(userInput);
             cardIndex = parser.parseNumber(userInput, runa.getMaxCardsChoice());
             card = runa.getCard(cardIndex);
-            if (!runa.canPlayCard(card)) cardIndex = 0;
+            if (!runa.canPlayCard(card)) {
+                cardIndex = 0;
+            }
         } while (cardIndex == 0);
+        output.output(String.format(Message.ATTACK_USE, card));
         //optional need monster to attack
         if (monstersInRoom.size() != 1 && card.getAbility().getAttackType() == AttackType.ATTACK) {
             output.output(String.format(Message.PICK_TARGET, getMonstersInRoomToString(monstersInRoom)));
@@ -314,10 +325,12 @@ public class TaskHandler {
         return outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString();
     }
 
-    private void runaAttack(Monster target, Ability card) {
+    private void runaAttack(Monster target, Ability card) throws GameQuitException {
         if (card.getAbility().isBreakFocus() && target.getFocusCard() != null) target.setFocusCard(null);
         if (card.getAbility().getAttackType() == AttackType.ATTACK) {
-            target.takeDamage(card.getAbility().calculateDamage(card.getLevel(), runa.getDice(), runa.getFocusPoints(), target.getType()), card.getAbility().getAbilityType());
+            target.takeDamage(card.getAbility().calculateDamage(card.getLevel()
+                    , card.getAbility().isNeedRoll() ? new Score(enterRoll()) : new Score(0)
+                    , runa.getFocusPoints(), target.getType()), card.getAbility().getAbilityType());
         } else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
             runa.setDefenseCard(card);
         } else {
@@ -333,6 +346,15 @@ public class TaskHandler {
         return monstersInRoom.stream().anyMatch(monster -> monster.getHealthPoints().getHealthPoints() > 0);
     }
 
+    private int enterRoll() throws GameQuitException {
+        output.output(String.format(Message.ENTER_ROLL, runa.getDice().getSides()));
+        int roll;
+        do {
+            var inputUser = input.read();
+            roll = parser.parseNumber(inputUser, runa.getDice().getSides());
+        } while (roll == 0);
+        return roll;
+    }
 
     /**
      * update the gamelevel to the next level
@@ -358,11 +380,10 @@ public class TaskHandler {
         }
     }
 
-    private String getBattleInformation() {
+    private String getBattleInformation(List<Monster> monstersInRoom) {
         var outputBuilder = new StringBuilder();
-        monsters.forEach(monster -> outputBuilder.append(monster.toString()).append(System.lineSeparator()));
-        outputBuilder.deleteCharAt(outputBuilder.length() - 1);
-        return String.format(Message.BATTLE_INFO, runa.toString(), outputBuilder.toString());
+        monstersInRoom.forEach(monster -> outputBuilder.append(monster.toString()).append(System.lineSeparator()));
+        return String.format(Message.BATTLE_INFO, runa.toString(), outputBuilder);
     }
 
     private void heal() throws GameQuitException {

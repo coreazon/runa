@@ -6,6 +6,7 @@ public class MonsterCard {
 
     private final MonsterCards card;
     private final Score level;
+    private static final String TO_STRING_FORMAT = "%s(%d)";
 
     public MonsterCard(MonsterCards card, Score level) {
         this.card = card;
@@ -18,5 +19,10 @@ public class MonsterCard {
 
     public MonsterCards getCard() {
         return card;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_FORMAT, card.getRepresentation(), level.getNumber());
     }
 }

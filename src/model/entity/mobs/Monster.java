@@ -12,16 +12,19 @@ public class Monster {
     private final List<MonsterCard> cards;
     private final Type type;
     private final FocusPoints focusPoints;
+    private final String name;
     private MonsterCard focusCard;
     private MonsterCard defenseCard;
+    private static final String TO_STRING_FORMAT = "%s (%d HP, %d FP): attempts %s next";
 
-    public Monster(HealthPoints healthPoints, FocusPoints focusPoints, List<MonsterCard> cards, Type type) {
+    public Monster(String name, HealthPoints healthPoints, FocusPoints focusPoints, List<MonsterCard> cards, Type type) {
         this.healthPoints = healthPoints;
         this.focusCard = null;
         this.type = type;
         this.defenseCard = null;
         this.focusPoints = focusPoints;
         this.cards = cards;
+        this.name = name;
     }
 
     public Type getType() {
@@ -72,5 +75,17 @@ public class Monster {
     public void reduceFocusPoints(MonsterCard card) {
         if (card.getCard().getType() != AbilityType.MAGICAL) return;
         this.focusPoints.setFocusPoints(getFocusPoints().getFocusPoints() - card.getLevel().getNumber());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_FORMAT, getName()
+                , getHealthPoints().getHealthPoints()
+                , getFocusPoints().getFocusPoints()
+                , getCards().get(0).toString());
     }
 }

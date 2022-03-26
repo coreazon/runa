@@ -1,5 +1,6 @@
 package model.entity.runa;
 
+import errors.GameQuitException;
 import message.Message;
 import model.dice.Dice;
 import model.entity.FocusPoints;
@@ -25,13 +26,14 @@ public class Runa {
     private ArrayList<Ability> abilities;
     private Ability focusCard;
     private Ability defenseCard;
+    private static final String CARDS_FORMAT = "%d) %s";
 
     public Runa(RunaClass classOfRuna) {
         this.healthPoints = new HealthPoints(STARTING_HEALTH);
         this.classOfRuna = classOfRuna;
         this.dice = new Dice(STARTING_DICE);
         this.abilities = new ArrayList<>();
-        this.focusPoints = new FocusPoints(this.dice.getSides());
+        this.focusPoints = new FocusPoints(1);
         this.focusCard = null;
         this.defenseCard = null;
     }
@@ -91,7 +93,12 @@ public class Runa {
     }
 
     public String getCardsInfo() {
-        return "";
+        var outputBuilder = new StringBuilder();
+        for (int i = 0; i < abilities.size(); i++) {
+            outputBuilder.append(String.format(CARDS_FORMAT, i + 1, getAbilities().get(i).toString()));
+            outputBuilder.append("\n");
+        }
+        return outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString();
     }
 
     @Override
@@ -107,7 +114,7 @@ public class Runa {
     }
 
     public int getMaxCardsChoice() {
-        return 0;
+        return getAbilities().size();
     }
 
     public void heal() {

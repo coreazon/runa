@@ -51,3 +51,6 @@ checken ob weniger als 50 hp
 
 schaden:
     kp muss das machen !
+
+vs.
+----------------------------------------
