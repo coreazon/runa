@@ -95,7 +95,6 @@ public class TaskHandler {
             }
         } while (seeds == null);
 
-        //TODO: change both lists according to their types
         var mobsList = Mobs.getMobsFromGameLevel(gameLevel.getGameLevel());
         var abilities = Abilities.getAllAbilitiesForRuna(runa.getClassOfRuna());
 
@@ -134,6 +133,7 @@ public class TaskHandler {
             while (true) {
                 output.output(getBattleInformation(monstersInRoom));
 
+                //TODO: check the outputs that are missing during the fight
 
                 //first runa
                 turnOfRuna(monstersInRoom);
