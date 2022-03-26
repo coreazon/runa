@@ -45,7 +45,7 @@ public class TaskHandler {
 
     private final Input input;
     private final Output output;
-    private final Runa runa;
+    private  Runa runa;
     private final CommandParserExecute parser;
     private Queue<Monster> monsters;
     private final GameLevel gameLevel;
@@ -56,9 +56,12 @@ public class TaskHandler {
         this.output = output;
         this.parser = parser;
         this.gameLevel = new GameLevel(1, 1);
-        this.runa = new Runa(initialize());
         this.monsters = new ArrayDeque<>();
         this.cardDeck = new ArrayList<>();
+    }
+
+    public void start() throws GameQuitException {
+        this.runa = new Runa(initialize());
     }
 
 

@@ -5,7 +5,11 @@ import core.Input;
 import core.Output;
 import core.Pair;
 import errors.Errors;
+import errors.GameLostException;
+import errors.GameQuitException;
+import errors.GameWonException;
 import errors.SyntaxException;
+import message.Message;
 import model.TaskHandler;
 
 import java.util.List;
@@ -58,61 +62,33 @@ public class Session {
      */
     public void interactive() {
         isCodeRunning = true;
-        //TODO choose class
+        try {
+            taskHandler.start();
+        }catch (GameQuitException e) {
+            isCodeRunning = false;
+        }
         while (isCodeRunning) {
-            //TODO shuffle
-
-            processSingleCommand();
-        }
-    }
-
-
-
-
-    private void processSingleCommand() {
-        String inputUser = input.read();
-        Pair<String, List<String>> parsedArguments;
-
-        try {
-            parsedArguments = commandParserExecute.parseCommand(inputUser);
-        } catch (SyntaxException e) {
-            errorOutput.output(e.getMessage());
-            return;
-        }
-        String command = parsedArguments.getFirstElement();
-        List<String> parameters = parsedArguments.getSecondElement();
-        executeSingleCommand(command, parameters);
-    }
-
-    private void executeSingleCommand(String commandName, List<String> parameters) {
-        Result result;
-
-        try {
-            result = Commands.getCommand(commandName).executeCommand(parameters, taskHandler);
-        } catch (SyntaxException e) {
-            result = new Result(Result.ResultType.FAILURE, e.getMessage());
-        }
-        switch (result.getResultType()) {
-            case SUCCESS:
-                if (result.getMessage() == null) {
-                    isCodeRunning = false;
-                } else if (result.getMessage().equals(CommandParserExecute.EMPTY_STRING)) {
-                    return;
-                } else {
-                    output.output(result.getMessage());
-                }
+            try {
+                taskHandler.shuffleCards();
+                taskHandler.fight();
+            } catch (GameQuitException e) {
                 break;
-            case FAILURE:
-                if (result.getMessage() != null) {
-                    errorOutput.output(result.getMessage());
-                } else {
-                    errorOutput.output(Errors.COMMAND_PARAM_WRONG);
-                }
+            } catch (GameLostException e) {
+                output.output(Message.LOST);
                 break;
-            default:
-                throw new IllegalStateException(Errors.COMMAND_NOT_IMPLEMENTED);
+            } catch (GameWonException e) {
+                output.output(e.getMessage());
+                break;
+            }
         }
     }
+
+
+
+
+
+
+
 
 
 }
