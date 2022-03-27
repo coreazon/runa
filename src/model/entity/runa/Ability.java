@@ -4,21 +4,43 @@ import model.entity.Score;
 
 import java.util.Objects;
 
+/**
+ * This class represents an ability
+ *
+ * @author urliz
+ * @version 1.0
+ */
 public class Ability {
 
     private static final String FORMAT = "%s(%d)";
     private final Abilities ability;
     private final Score level;
 
+    /**
+     * Creates a new Ability
+     *
+     * @param ability the ability
+     * @param level   the level
+     */
     public Ability(Abilities ability, Score level) {
         this.ability = ability;
         this.level = level;
     }
 
+    /**
+     * returns the level of the ability
+     *
+     * @return teh leve
+     */
     public Score getLevel() {
         return level;
     }
 
+    /**
+     * returns the ability
+     *
+     * @return the ability
+     */
     public Abilities getAbility() {
         return ability;
     }

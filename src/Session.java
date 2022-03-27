@@ -39,17 +39,6 @@ public class Session {
     }
 
 
-    /*
-        initialize - choose class
-        loop:
-            shuffle
-            loop:
-                fight
-                reward and heal
-                next room
-            next level
-     */
-
     /**
      * Method which starts the task
      */

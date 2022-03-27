@@ -19,17 +19,37 @@ import java.util.Set;
  */
 public class CommandParserExecute implements CommandParser {
 
-
+    /**
+     * separator of a seed
+     */
     public static final String SEED_SEPARATOR = ",";
-    public static final String ENTER = "(\n|)";
 
 
     //REGEX here
 
+    /**
+     * regex of a enter value
+     */
+    public static final String ENTER = "(\n|)";
+    /**
+     * Regex for the classes
+     */
     public static final String CHOOSE_CLASS_REGEX = "[1-3]";
+    /**
+     * Regex for a number
+     */
     public static final String NUMBER = "[1-9][0-9]*";
+    /**
+     * regex for the seeds
+     */
     public static final String REGEX_SEEDS = NUMBER + "," + NUMBER;
+    /**
+     * regex for the quit command
+     */
     public static final String QUIT_REGEX = "quit";
+    /**
+     * regex for the numbers input
+     */
     public static final String REGEX_NUMBERS = "(" + NUMBER + "|[" + NUMBER + ",]+" + NUMBER + ")";
 
     //****************
@@ -45,6 +65,7 @@ public class CommandParserExecute implements CommandParser {
         if (input.matches(QUIT_REGEX)) throw new GameQuitException();
     }
 
+    @Override
     public Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException {
         if (!input.matches(REGEX_SEEDS)) throw new SeedNotFoundException();
         if (!input.contains(SEED_SEPARATOR)) throw new SeedNotFoundException();
@@ -52,7 +73,7 @@ public class CommandParserExecute implements CommandParser {
         if (seeds.length > 2) throw new SeedNotFoundException();
         try {
             return new Pair<>(Integer.parseInt(seeds[0]), Integer.parseInt(seeds[1]));
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new SeedNotFoundException();
         }
     }
@@ -77,7 +98,7 @@ public class CommandParserExecute implements CommandParser {
         if (!input.matches(REGEX_NUMBERS)) return null;
         int[] numbers;
         try {
-           numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
+            numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
         } catch (NumberFormatException e) {
             return null;
         }
@@ -93,7 +114,7 @@ public class CommandParserExecute implements CommandParser {
         int[] numbers;
         try {
             numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return null;
         }
         if (numbers.length > amountOfMaxNumbers || duplicates(numbers) || notInRange(numbers, maxNumber)) return null;

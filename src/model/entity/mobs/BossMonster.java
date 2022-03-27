@@ -1,22 +1,38 @@
 package model.entity.mobs;
 
-import model.entity.FocusPoints;
+import model.entity.FocusPoint;
 
-import java.util.ArrayList;
-
+/**
+ * This class represents a Boss
+ *
+ * @author urliz
+ * @version 1.0
+ */
 public class BossMonster extends Monster {
 
-    private final BossMobs boss;
     private static final String TO_STRING_FORMAT = "%s (%d HP, %d FP): attempts %s next";
+    private final BossMobs boss;
 
-    public BossMonster(BossMobs boss, FocusPoints focusPoints) {
-        super(boss.getRepresentation(), boss.getHealthPoints(), focusPoints, (ArrayList<MonsterCard>) boss.getCards(), boss.getType());
+    /**
+     * creates a new Boss
+     *
+     * @param boss        the boss
+     * @param focusPoints the focus points of that boss
+     */
+    public BossMonster(BossMobs boss, FocusPoint focusPoints) {
+        super(boss.getRepresentation(), boss.getHealthPoints(), focusPoints, boss.getCards(), boss.getType());
         this.boss = boss;
     }
 
+    /**
+     * returns the boss enum
+     *
+     * @return the enum
+     */
     public BossMobs getBoss() {
         return boss;
     }
+
     @Override
     public String toString() {
         return String.format(TO_STRING_FORMAT, getName()

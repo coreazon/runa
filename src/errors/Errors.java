@@ -8,14 +8,7 @@ package errors;
  */
 public final class Errors {
 
-    /**
-     * Error-Message which gets thrown when the command arguments are wrong
-     */
-    public static final String COMMAND_PARAM_WRONG = "the parameters are wrong";
-    /**
-     * Error-Message which gets thrown when the command should have been implemented but is not
-     */
-    public static final String COMMAND_NOT_IMPLEMENTED = "command not implemented";
+
     /**
      * Error-Message which gets thrown when there are command line arguments
      */

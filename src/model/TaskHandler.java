@@ -11,7 +11,7 @@ import errors.GameWonException;
 import errors.SeedNotFoundException;
 import message.Message;
 import model.entity.AttackType;
-import model.entity.FocusPoints;
+import model.entity.FocusPoint;
 import model.entity.Score;
 import model.entity.mobs.BossMobs;
 import model.entity.mobs.BossMonster;
@@ -51,6 +51,13 @@ public class TaskHandler {
     private Runa runa;
     private Queue<Monster> monsters;
 
+    /**
+     * Creates a new TaskHandler
+     *
+     * @param input  the input
+     * @param output the output
+     * @param parser the parser
+     */
     public TaskHandler(Input input, Output output, CommandParserExecute parser) {
         this.input = input;
         this.output = output;
@@ -60,6 +67,11 @@ public class TaskHandler {
         this.cardDeck = new ArrayList<>();
     }
 
+    /**
+     * starts the game and executes the required steps
+     *
+     * @throws GameQuitException if the user quits the game
+     */
     public void start() throws GameQuitException {
         this.runa = new Runa(initialize());
     }
@@ -81,6 +93,11 @@ public class TaskHandler {
         return runaClass;
     }
 
+    /**
+     * shuffle the cards
+     *
+     * @throws GameQuitException if the user quits the game
+     */
     public void shuffleCards() throws GameQuitException {
 
         output.output(Message.SHUFFLE_MESSAGE);
@@ -106,7 +123,7 @@ public class TaskHandler {
         var listOfMonsters = new ArrayList<Monster>();
 
         abilities.forEach(ability -> listOfAbilities.add(new Ability(ability, new Score(gameLevel.getGameLevel()))));
-        mobsList.forEach(monster -> listOfMonsters.add(new RegularMonster(monster, new FocusPoints(0))));
+        mobsList.forEach(monster -> listOfMonsters.add(new RegularMonster(monster, new FocusPoint(0))));
 
         this.monsters = new LinkedList<>(listOfMonsters);
         cardDeck = (new ArrayList<>(listOfAbilities));
@@ -118,6 +135,7 @@ public class TaskHandler {
      *
      * @throws GameQuitException if runa quits the game
      * @throws GameLostException if runa lost the game
+     * @throws GameWonException  if runa won the game
      */
     public void fight() throws GameQuitException, GameLostException, GameWonException {
         var inLevel = true;
@@ -133,7 +151,6 @@ public class TaskHandler {
             while (true) {
                 output.output(getBattleInformation(monstersInRoom));
 
-                //TODO: check the outputs that are missing during the fight
 
                 //first runa
                 turnOfRuna(monstersInRoom);
@@ -268,14 +285,16 @@ public class TaskHandler {
             if (card.getCard().isBreakFocus() && runa.getFocusCard() != null) runa.setFocusCard(null);
             if (card.getCard().getAttackType() == AttackType.ATTACK) {
                 var damage = runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster);
-                if (damage.getHealthPoints() > 0) output.output(String.format(Message.RUNA_TOOK_DAMAGE, damage.getHealthPoints(), card.getCard().getType().getRepresentation()));
+                if (damage.getHealthPoints() > 0)
+                    output.output(String.format(Message.RUNA_TOOK_DAMAGE, damage.getHealthPoints(), card.getCard().getType().getRepresentation()));
             } else if (card.getCard().getAttackType() == AttackType.DEFENSE) {
                 monster.setDefenseCard(card);
             } else {
                 monster.setFocusCard(card);
             }
             monster.reduceFocusPoints(card);
-            if (monster.getHealthPoints().getHealthPoints() <= 0) output.output(String.format(Message.MOB_DIED, monster.getName()));
+            if (monster.getHealthPoints().getHealthPoints() <= 0)
+                output.output(String.format(Message.MOB_DIED, monster.getName()));
             monster.addBack(card);
         });
     }
@@ -292,7 +311,7 @@ public class TaskHandler {
         monstersInRoom.stream().filter(monster -> monster.getFocusCard() != null)
                 .collect(Collectors.toList()).forEach(monster -> {
             monster.getFocusPoints().setFocusPoints(monster.getFocusCard().getLevel().getNumber());
-            output.output(String.format(Message.MOB_FOCUS,monster.getName() , monster.getFocusCard().getLevel().getNumber()));
+            output.output(String.format(Message.MOB_FOCUS, monster.getName(), monster.getFocusCard().getLevel().getNumber()));
             monster.setFocusCard(null);
         });
     }
@@ -300,7 +319,7 @@ public class TaskHandler {
     private List<Monster> getMobsForRoom() {
         LinkedList<Monster> list = new LinkedList<>();
         if (gameLevel.getGameRoom() == 4)
-            list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel()), new FocusPoints(0)));
+            list.add(new BossMonster(BossMobs.getBoss(gameLevel.getGameLevel()), new FocusPoint(0)));
         else if (gameLevel.getGameRoom() == 1) list.add(this.monsters.poll());
         else {
             var firstMob = this.monsters.poll();
@@ -312,10 +331,6 @@ public class TaskHandler {
     }
 
     private void turnOfRuna(List<Monster> monstersInRoom) throws GameQuitException {
-        //TODO: fix that
-//        if (!runa.canPlayCard(card)) {
-//            cardIndex = 0;
-//        }
 
         //first need attack from user
         output.output(String.format(Message.RUNA_CARDS, runa.getCardsInfo()));
@@ -363,16 +378,18 @@ public class TaskHandler {
         if (card.getAbility().isBreakFocus() && target.getFocusCard() != null) target.setFocusCard(null);
         if (card.getAbility().getAttackType() == AttackType.ATTACK) {
             var dmg = target.takeDamage(card.getAbility().calculateDamage(card.getLevel()
-                                                , card.getAbility().isNeedRoll() ? new Score(enterRoll()) : new Score(0)
-                                                , runa.getFocusPoints(), target.getType())
-                                            , card.getAbility().getAbilityType());
-            if (dmg > 0) output.output(String.format(Message.MOB_TOOK_DAMAGE, target.getName(), dmg, card.getAbility().getAbilityType().getRepresentation()));
+                    , card.getAbility().isNeedRoll() ? new Score(enterRoll()) : new Score(0)
+                    , runa.getFocusPoints(), target.getType())
+                    , card.getAbility().getAbilityType());
+            if (dmg > 0)
+                output.output(String.format(Message.MOB_TOOK_DAMAGE, target.getName(), dmg, card.getAbility().getAbilityType().getRepresentation()));
         } else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
             runa.setDefenseCard(card);
         } else {
             runa.setFocusCard(card);
         }
-        if (target.getHealthPoints().getHealthPoints() <= 0) output.output(String.format(Message.MOB_DIED, target.getName()));
+        if (target.getHealthPoints().getHealthPoints() <= 0)
+            output.output(String.format(Message.MOB_DIED, target.getName()));
     }
 
     private void hasLost() throws GameLostException {

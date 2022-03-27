@@ -1,23 +1,29 @@
 package model.entity.mobs;
 
-import model.entity.FocusPoints;
+import model.entity.FocusPoint;
 
-import java.util.ArrayList;
-
+/**
+ * THis class represents a regular monster
+ *
+ * @author urliz
+ * @version 1.0
+ */
 public class RegularMonster extends Monster {
 
-    private final Mobs mob;
     private static final String TO_STRING_FORMAT = "%s (%d HP, %d FP): attempts %s next";
+    private final Mobs mob;
 
-
-    public RegularMonster(Mobs mob, FocusPoints focusPoints) {
-        super(mob.getRepresentation(), mob.getHealthPoints(), focusPoints, (ArrayList<MonsterCard>) mob.getCards(), mob.getType());
+    /**
+     * creates a new regular monster
+     *
+     * @param mob         the monster
+     * @param focusPoints the focus points
+     */
+    public RegularMonster(Mobs mob, FocusPoint focusPoints) {
+        super(mob.getRepresentation(), mob.getHealthPoints(), focusPoints, mob.getCards(), mob.getType());
         this.mob = mob;
     }
 
-    public Mobs getMob() {
-        return mob;
-    }
 
     @Override
     public String toString() {
