@@ -5,6 +5,9 @@ import model.entity.Score;
 
 /**
  * The interface is used to calculate damage
+ *
+ * @author urliz
+ * @version 1.0
  */
 public interface DamageCalculatorMob {
     /**

@@ -7,6 +7,9 @@ import model.entity.mobs.Type;
 
 /**
  * this interface calculates damage
+ *
+ * @author urliz
+ * @version 1.0
  */
 public interface DamageCalculatorRuna {
     /**

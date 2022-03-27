@@ -211,7 +211,8 @@ public class TaskHandler {
             outputBuilder.append(String.format(Message.CARDS_LISTED, i + 1, cardDeck.get(i).toString()));
             outputBuilder.append("\n");
         }
-        return outputBuilder.length() > 0 ? outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString() : outputBuilder.toString();
+        return outputBuilder.length() > 0
+                ? outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString() : outputBuilder.toString();
     }
 
     private void chooseCard() throws GameQuitException {
@@ -284,9 +285,11 @@ public class TaskHandler {
             output.output(String.format(Message.MOB_ATTACK, monster.getName(), card));
             if (card.getCard().isBreakFocus() && runa.getFocusCard() != null) runa.setFocusCard(null);
             if (card.getCard().getAttackType() == AttackType.ATTACK) {
-                var damage = runa.takeDamage(card.getCard().calculateDamage(card.getLevel()), card.getCard().getType(), monster);
+                var damage = runa.takeDamage(card.getCard()
+                        .calculateDamage(card.getLevel()), card.getCard().getType(), monster);
                 if (damage.getHealthPoints() > 0)
-                    output.output(String.format(Message.RUNA_TOOK_DAMAGE, damage.getHealthPoints(), card.getCard().getType().getRepresentation()));
+                    output.output(String.format(Message.RUNA_TOOK_DAMAGE
+                            , damage.getHealthPoints(), card.getCard().getType().getRepresentation()));
             } else if (card.getCard().getAttackType() == AttackType.DEFENSE) {
                 monster.setDefenseCard(card);
             } else {
@@ -303,17 +306,19 @@ public class TaskHandler {
         if (runa.getFocusCard() == null) return;
         var focusPoints = runa.getFocusCard().getLevel().getNumber();
         output.output(String.format(Message.RUNA_FOCUS, focusPoints));
-        runa.getFocusPoints().setFocusPoints(Math.min(focusPoints + runa.getFocusPoints().getFocusPoints(), runa.getDice().getSides()));
+        runa.getFocusPoints().setFocusPoints(Math.min(focusPoints
+                + runa.getFocusPoints().getFocusPoints(), runa.getDice().getSides()));
         runa.setFocusCard(null);
     }
 
     private void focusPointsTurnMonster(List<Monster> monstersInRoom) {
         monstersInRoom.stream().filter(monster -> monster.getFocusCard() != null)
                 .collect(Collectors.toList()).forEach(monster -> {
-            monster.getFocusPoints().setFocusPoints(monster.getFocusCard().getLevel().getNumber());
-            output.output(String.format(Message.MOB_FOCUS, monster.getName(), monster.getFocusCard().getLevel().getNumber()));
-            monster.setFocusCard(null);
-        });
+                    monster.getFocusPoints().setFocusPoints(monster.getFocusCard().getLevel().getNumber());
+                    output.output(String.format(Message.MOB_FOCUS
+                        , monster.getName(), monster.getFocusCard().getLevel().getNumber()));
+                    monster.setFocusCard(null);
+                });
     }
 
     private List<Monster> getMobsForRoom() {
@@ -369,7 +374,8 @@ public class TaskHandler {
     private String getMonstersInRoomToString(List<Monster> monstersInRoom) {
         var outputBuilder = new StringBuilder();
         var i = new AtomicInteger();
-        monstersInRoom.forEach(mob -> outputBuilder.append(String.format(Message.CARDS_LISTED, i.incrementAndGet(), mob.getName())).append("\n"));
+        monstersInRoom.forEach(mob -> outputBuilder.append(String.format(Message.CARDS_LISTED
+                , i.incrementAndGet(), mob.getName())).append("\n"));
         return outputBuilder.deleteCharAt(outputBuilder.length() - 1).toString();
     }
 
@@ -382,7 +388,8 @@ public class TaskHandler {
                     , runa.getFocusPoints(), target.getType())
                     , card.getAbility().getAbilityType());
             if (dmg > 0)
-                output.output(String.format(Message.MOB_TOOK_DAMAGE, target.getName(), dmg, card.getAbility().getAbilityType().getRepresentation()));
+                output.output(String.format(Message.MOB_TOOK_DAMAGE
+                        , target.getName(), dmg, card.getAbility().getAbilityType().getRepresentation()));
         } else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
             runa.setDefenseCard(card);
         } else {

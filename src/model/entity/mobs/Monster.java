@@ -33,7 +33,8 @@ public class Monster {
      * @param cards        cards of that monster
      * @param type         type of that monster
      */
-    public Monster(String name, HealthPoints healthPoints, FocusPoint focusPoints, ArrayList<MonsterCard> cards, Type type) {
+    public Monster(String name, HealthPoints healthPoints, FocusPoint focusPoints
+            , ArrayList<MonsterCard> cards, Type type) {
         this.healthPoints = healthPoints;
         this.focusCard = null;
         this.type = type;

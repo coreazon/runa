@@ -148,7 +148,8 @@ public enum Abilities implements DamageCalculatorRuna {
      * @param defenseType    the defenseCard
      * @param needRoll       the needRoll
      */
-    Abilities(String representation, AbilityType abilityType, FocusPoint fpCosts, AttackType attackType, boolean breakFocus, AbilityType defenseType, boolean needRoll) {
+    Abilities(String representation, AbilityType abilityType, FocusPoint fpCosts, AttackType attackType
+            , boolean breakFocus, AbilityType defenseType, boolean needRoll) {
         this.representation = representation;
         this.abilityType = abilityType;
         this.fpCosts = fpCosts;
@@ -158,11 +159,23 @@ public enum Abilities implements DamageCalculatorRuna {
         this.needRoll = needRoll;
     }
 
+    /**
+     * returns all the abilities for runa in a list
+     *
+     * @param runaClass the class of runa
+     * @return the abilities in a list
+     */
     public static List<Abilities> getAllAbilitiesForRuna(RunaClass runaClass) {
 
-        return Arrays.stream(Abilities.values()).filter(ability -> !runaClass.getAbilities().contains(ability)).collect(Collectors.toList());
+        return Arrays.stream(Abilities.values())
+                .filter(ability -> !runaClass.getAbilities().contains(ability)).collect(Collectors.toList());
     }
 
+    /**
+     * returns wether the ability needs a dice roll or not
+     *
+     * @return true if it needs
+     */
     public boolean isNeedRoll() {
         return needRoll;
     }

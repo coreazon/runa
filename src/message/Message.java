@@ -67,9 +67,8 @@ public final class Message {
     /**
      * reward message
      */
-    public static final String REWARD = "Choose Runa's reward\n" +
-            "1) new ability cards\n" +
-            "2) next player dice";
+    public static final String REWARD = "Choose Runa's reward\n"
+            + "1) new ability cards\n" + "2) next player dice";
     /**
      * dice upgrade message
      */

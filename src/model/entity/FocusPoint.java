@@ -8,15 +8,15 @@ package model.entity;
  */
 public class FocusPoint {
 
-    private int FocusPoints;
+    private int focusPoints;
 
     /**
      * Creates a new FocusPoint
      *
-     * @param FocusPoints focus points
+     * @param focusPoints focus points
      */
-    public FocusPoint(int FocusPoints) {
-        this.FocusPoints = FocusPoints;
+    public FocusPoint(int focusPoints) {
+        this.focusPoints = focusPoints;
     }
 
     /**
@@ -25,7 +25,7 @@ public class FocusPoint {
      * @return the focusPoints
      */
     public int getFocusPoints() {
-        return FocusPoints;
+        return focusPoints;
     }
 
     /**
@@ -34,6 +34,6 @@ public class FocusPoint {
      * @param focusPoints the focusPoints
      */
     public void setFocusPoints(int focusPoints) {
-        FocusPoints = focusPoints;
+        this.focusPoints = focusPoints;
     }
 }

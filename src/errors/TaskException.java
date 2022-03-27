@@ -19,5 +19,8 @@ public abstract class TaskException extends Exception {
         super(message);
     }
 
-    protected TaskException() {}
+    /**
+     * default constructor
+     */
+    protected TaskException() { }
 }

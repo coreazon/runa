@@ -6,14 +6,14 @@ package errors;
  * @author urliz
  * @version 1.0
  */
-public class SeedNotFoundException extends TaskException{
+public class SeedNotFoundException extends TaskException {
 
     private static final long serialVersionUID = 4634547534133386227L;
 
     /**
      * creates an exception without message
      */
-    public SeedNotFoundException(){
+    public SeedNotFoundException() {
         super();
     }
 }

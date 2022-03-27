@@ -135,7 +135,8 @@ public enum MonsterCards implements DamageCalculatorMob {
      * @param breakFocus     breakFocus
      * @param abilityType    abilityType
      */
-    MonsterCards(String representation, AttackType attackType, AbilityType defenseType, boolean breakFocus, AbilityType abilityType) {
+    MonsterCards(String representation, AttackType attackType
+            , AbilityType defenseType, boolean breakFocus, AbilityType abilityType) {
         this.representation = representation;
         this.attackType = attackType;
         this.defenseType = defenseType;

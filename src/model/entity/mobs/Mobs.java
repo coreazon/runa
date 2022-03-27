@@ -16,67 +16,108 @@ public enum Mobs {
     /**
      * frog monster
      */
-    FROG("Frog", Type.WATER, 1, new HealthPoints(16), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1)), new MonsterCard(MonsterCards.WATER, new Score(1))))),
+    FROG("Frog", Type.WATER, 1, new HealthPoints(16)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1))
+            , new MonsterCard(MonsterCards.WATER, new Score(1))))),
     /**
      * ghost monster
      */
-    GHOST("Ghost", Type.ICE, 1, new HealthPoints(15), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1)), new MonsterCard(MonsterCards.ICE, new Score(1))))),
+    GHOST("Ghost", Type.ICE, 1, new HealthPoints(15)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1))
+            , new MonsterCard(MonsterCards.ICE, new Score(1))))),
     /**
      * gorgon monster
      */
-    GORGON("Gorgon", Type.FIRE, 1, new HealthPoints(13), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1)), new MonsterCard(MonsterCards.FIRE, new Score(1))))),
+    GORGON("Gorgon", Type.FIRE, 1, new HealthPoints(13)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1))
+            , new MonsterCard(MonsterCards.FIRE, new Score(1))))),
     /**
      * Skeleton monster
      */
-    SKELETON("Skeleton", Type.LIGHTNING, 1, new HealthPoints(14), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1)), new MonsterCard(MonsterCards.LIGHTNING, new Score(1))))),
+    SKELETON("Skeleton", Type.LIGHTNING, 1, new HealthPoints(14)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(1))
+            , new MonsterCard(MonsterCards.LIGHTNING, new Score(1))))),
     /**
      * spider monster
      */
-    SPIDER("Spider", Type.NONE, 1, new HealthPoints(15), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BITE, new Score(1)), new MonsterCard(MonsterCards.BLOCK, new Score(1))))),
+    SPIDER("Spider", Type.NONE, 1, new HealthPoints(15)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BITE, new Score(1))
+            , new MonsterCard(MonsterCards.BLOCK, new Score(1))))),
     /**
      * goblin monster
      */
-    GOBLIN("Goblin", Type.NONE, 1, new HealthPoints(12), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SMASH, new Score(1)), new MonsterCard(MonsterCards.DEFLECT, new Score(1))))),
+    GOBLIN("Goblin", Type.NONE, 1, new HealthPoints(12)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SMASH, new Score(1))
+            , new MonsterCard(MonsterCards.DEFLECT, new Score(1))))),
     /**
      * rat monster
      */
-    RAT("Rat", Type.NONE, 1, new HealthPoints(14), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BLOCK, new Score(1)), new MonsterCard(MonsterCards.CLAW, new Score(1))))),
+    RAT("Rat", Type.NONE, 1, new HealthPoints(14)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BLOCK, new Score(1))
+            , new MonsterCard(MonsterCards.CLAW, new Score(1))))),
     /**
      * mushroomlon monster
      */
-    MUSHROOMLIN("Mushroomlin", Type.NONE, 1, new HealthPoints(20), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.DEFLECT, new Score(1)), new MonsterCard(MonsterCards.SCRATCH, new Score(1))))),
+    MUSHROOMLIN("Mushroomlin", Type.NONE, 1, new HealthPoints(20)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.DEFLECT, new Score(1))
+            , new MonsterCard(MonsterCards.SCRATCH, new Score(1))))),
     /**
      * snake monster
      */
-    SNAKE("Snake", Type.ICE, 2, new HealthPoints(31), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BITE, new Score(2)), new MonsterCard(MonsterCards.FOCUS, new Score(2)), new MonsterCard(MonsterCards.ICE, new Score(2))))),
+    SNAKE("Snake", Type.ICE, 2, new HealthPoints(31)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BITE, new Score(2))
+            , new MonsterCard(MonsterCards.FOCUS, new Score(2))
+            , new MonsterCard(MonsterCards.ICE, new Score(2))))),
     /**
      * dark-elf mosnter
      */
-    DARK_ELF("Dark Elf", Type.NONE, 2, new HealthPoints(34), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(2)), new MonsterCard(MonsterCards.WATER, new Score(1)), new MonsterCard(MonsterCards.LIGHTNING, new Score(1))))),
+    DARK_ELF("Dark Elf", Type.NONE, 2, new HealthPoints(34)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.FOCUS, new Score(2))
+            , new MonsterCard(MonsterCards.WATER, new Score(1))
+            , new MonsterCard(MonsterCards.LIGHTNING, new Score(1))))),
     /**
      * Shadow blade monster
      */
-    SHADOW_BLADE("Shadow Blade", Type.LIGHTNING, 2, new HealthPoints(27), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SCRATCH, new Score(2)), new MonsterCard(MonsterCards.FOCUS, new Score(2)), new MonsterCard(MonsterCards.LIGHTNING, new Score(2))))),
+    SHADOW_BLADE("Shadow Blade", Type.LIGHTNING, 2, new HealthPoints(27)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SCRATCH, new Score(2))
+            , new MonsterCard(MonsterCards.FOCUS, new Score(2))
+            , new MonsterCard(MonsterCards.LIGHTNING, new Score(2))))),
     /**
      * Hornet monster
      */
-    HORNET("Hornet", Type.FIRE, 2, new HealthPoints(32), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SCRATCH, new Score(2)), new MonsterCard(MonsterCards.FOCUS, new Score(2)), new MonsterCard(MonsterCards.FIRE, new Score(1)), new MonsterCard(MonsterCards.FIRE, new Score(2))))),
+    HORNET("Hornet", Type.FIRE, 2, new HealthPoints(32)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SCRATCH, new Score(2))
+            , new MonsterCard(MonsterCards.FOCUS, new Score(2))
+            , new MonsterCard(MonsterCards.FIRE, new Score(1))
+            , new MonsterCard(MonsterCards.FIRE, new Score(2))))),
     /**
      * tarantula monster
      */
-    TARANTULA("Tarantula", Type.NONE, 2, new HealthPoints(33), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BITE, new Score(2)), new MonsterCard(MonsterCards.BLOCK, new Score(2)), new MonsterCard(MonsterCards.SCRATCH, new Score(2))))),
+    TARANTULA("Tarantula", Type.NONE, 2, new HealthPoints(33)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.BITE, new Score(2))
+            , new MonsterCard(MonsterCards.BLOCK, new Score(2))
+            , new MonsterCard(MonsterCards.SCRATCH, new Score(2))))),
     /**
      * bear monster
      */
-    BEAR("Bear", Type.NONE, 2, new HealthPoints(40), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.CLAW, new Score(2)), new MonsterCard(MonsterCards.DEFLECT, new Score(2)), new MonsterCard(MonsterCards.BLOCK, new Score(2))))),
+    BEAR("Bear", Type.NONE, 2, new HealthPoints(40)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.CLAW, new Score(2))
+            , new MonsterCard(MonsterCards.DEFLECT, new Score(2))
+            , new MonsterCard(MonsterCards.BLOCK, new Score(2))))),
     /**
      * mushroomlon monster
      */
-    MUSHROOMLON("Mushroomlon", Type.NONE, 2, new HealthPoints(50), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.DEFLECT, new Score(2)), new MonsterCard(MonsterCards.SCRATCH, new Score(2)), new MonsterCard(MonsterCards.BLOCK, new Score(2))))),
+    MUSHROOMLON("Mushroomlon", Type.NONE, 2, new HealthPoints(50)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.DEFLECT, new Score(2))
+            , new MonsterCard(MonsterCards.SCRATCH, new Score(2))
+            , new MonsterCard(MonsterCards.BLOCK, new Score(2))))),
     /**
      * wild boar mosnter
      */
-    WILD_BOAR("Wild Boar", Type.NONE, 2, new HealthPoints(27), new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SCRATCH, new Score(2)), new MonsterCard(MonsterCards.DEFLECT, new Score(2)), new MonsterCard(MonsterCards.SCRATCH, new Score(2)))));
+    WILD_BOAR("Wild Boar", Type.NONE, 2, new HealthPoints(27)
+            , new ArrayList<>(Arrays.asList(new MonsterCard(MonsterCards.SCRATCH, new Score(2))
+            , new MonsterCard(MonsterCards.DEFLECT, new Score(2))
+            , new MonsterCard(MonsterCards.SCRATCH, new Score(2)))));
 
     private final String representation;
     private final int gameLevel;

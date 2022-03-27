@@ -18,6 +18,9 @@ public abstract class GameEndException extends Exception {
         super(message);
     }
 
-    protected GameEndException() {}
+    /**
+     * default constructor
+     */
+    protected GameEndException() { }
 
 }
