@@ -25,7 +25,7 @@ public final class Message {
     public static final String REWARD = "Choose Runa's reward\n" +
             "1) new ability cards\n" +
             "2) next player dice";
-    public static final String DICE_UPGRADE = "Runa upgrades her die to a d%d.";
+    public static final String DICE_UPGRADE = "Runa upgrades her die to a d%d";
     public static final String PICK_CARDS = "Pick %d card(s) as loot\n%s";
     public static final String CARDS_LISTED = "%d) %s";
     public static final String WON = "Runa won!";

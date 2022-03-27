@@ -44,7 +44,7 @@ public enum MonsterCards implements DamageCalculatorMob {
     BLOCK("Block", AttackType.DEFENSE, AbilityType.PHYSICAL, false, AbilityType.NONE) {
         @Override
         public HealthPoints calculateDamage(Score level) {
-            return new HealthPoints(7);
+            return new HealthPoints(7 * level.getNumber());
         }
     },
     DEFLECT("Deflect", AttackType.DEFENSE, AbilityType.MAGICAL, false, AbilityType.NONE) {

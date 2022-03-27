@@ -142,5 +142,7 @@ public enum Abilities implements DamageCalculatorRuna {
         return attackType;
     }
 
-
+    public AbilityType getDefenseType() {
+        return defenseType;
+    }
 }

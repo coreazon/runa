@@ -70,8 +70,9 @@ public class Monster {
 
     public int takeDamage(HealthPoints damage, AbilityType type) {
         if (defenseCard != null) {
-            if (defenseCard.getCard().getDefense() == type)
+            if (defenseCard.getCard().getDefense() == type) {
                 damage.shieldDamage(defenseCard.getCard().calculateDamage(defenseCard.getLevel()));
+            }
             this.defenseCard = null;
         }
         healthPoints.takeDamage(damage);

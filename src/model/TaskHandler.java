@@ -152,18 +152,26 @@ public class TaskHandler {
 
             }
 
-
+            resetBuffs();
+            //get reward as long it wasn't the boss
             if (gameLevel.getGameRoom() != 4) reward();
-            heal();
             inLevel = nextRoom();
+            //don't heal if the level change -> need to upgrade first
+            if (inLevel) heal();
         }
         //check if won the game
         if (gameLevel.getGameLevel() == 2) throw new GameWonException(Message.WON);
         //check rewards
         upgrade();
         //heal player
+        heal();
 
         nextLevel();
+    }
+
+    private void resetBuffs() {
+        runa.setFocusCard(null);
+        runa.setDefenseCard(null);
     }
 
     private void getRidOfDeadMobs(List<Monster> monstersInRoom) {
@@ -229,11 +237,11 @@ public class TaskHandler {
 
     private void reward() throws GameQuitException {
 
-        output.output(Message.REWARD);
         //check if runa can get better dice
         if (runa.getDice().getSides() == 12) {
             chooseCard();
         } else {
+            output.output(Message.REWARD);
             int reward;
             do {
                 output.output(String.format(Message.ENTER_NUMBER, 2));
@@ -355,10 +363,10 @@ public class TaskHandler {
         if (card.getAbility().isBreakFocus() && target.getFocusCard() != null) target.setFocusCard(null);
         if (card.getAbility().getAttackType() == AttackType.ATTACK) {
             var dmg = target.takeDamage(card.getAbility().calculateDamage(card.getLevel()
-                        , card.getAbility().isNeedRoll() ? new Score(enterRoll()) : new Score(0)
-                        , runa.getFocusPoints(), target.getType())
-                    , card.getAbility().getAbilityType());
-            output.output(String.format(Message.MOB_TOOK_DAMAGE, target.getName(), dmg, card.getAbility().getAbilityType().getRepresentation()));
+                                                , card.getAbility().isNeedRoll() ? new Score(enterRoll()) : new Score(0)
+                                                , runa.getFocusPoints(), target.getType())
+                                            , card.getAbility().getAbilityType());
+            if (dmg > 0) output.output(String.format(Message.MOB_TOOK_DAMAGE, target.getName(), dmg, card.getAbility().getAbilityType().getRepresentation()));
         } else if (card.getAbility().getAttackType() == AttackType.DEFENSE) {
             runa.setDefenseCard(card);
         } else {
@@ -418,16 +426,17 @@ public class TaskHandler {
     private void heal() throws GameQuitException {
         if (runa.getHealthPoints().getHealthPoints() == 50 || runa.getAbilities().size() == 1) return;
         if (runa.getAbilities().size() == 2) {
-            int heal;
+            int[] heal;
             output.output(String.format(Message.HEAL, runa.getHealthPoints().getHealthPoints(), runa.getCardsInfo()));
             do {
                 output.output(String.format(Message.ENTER_NUMBER, runa.getAbilities().size()));
                 var inputUser = input.read();
                 parser.checkQuitParser(inputUser);
-                heal = parser.parseNumber(inputUser, runa.getAbilities().size());
+                heal = parser.parseHealNumbers(inputUser, runa.getAbilities().size(), 1);
 
-            } while (heal == 0);
-            runa.discardCard(new int[]{heal});
+            } while (heal == null);
+            if (heal.length == 0) return;
+            runa.discardCard(heal);
             var healthBefore = runa.getHealthPoints().getHealthPoints();
             runa.heal();
             output.output(String.format(Message.HEALED, runa.getHealthPoints().getHealthPoints() - healthBefore));

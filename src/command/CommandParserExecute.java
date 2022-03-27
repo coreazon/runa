@@ -21,15 +21,16 @@ public class CommandParserExecute implements CommandParser {
 
 
     public static final String SEED_SEPARATOR = ",";
+    public static final String ENTER = "(\n|)";
 
 
     //REGEX here
 
     public static final String CHOOSE_CLASS_REGEX = "[1-3]";
-    public static final String SEED = "[0-9]+";
-    public static final String REGEX_SEEDS = "SEED,SEED";
+    public static final String NUMBER = "[1-9][0-9]*";
+    public static final String REGEX_SEEDS = NUMBER + "," + NUMBER;
     public static final String QUIT_REGEX = "quit";
-    public static final String REGEX_NUMBERS = "(" + SEED + "|[" + SEED + ",]+" + SEED + ")";
+    public static final String REGEX_NUMBERS = "(" + NUMBER + "|[" + NUMBER + ",]+" + NUMBER + ")";
 
     //****************
 
@@ -45,17 +46,27 @@ public class CommandParserExecute implements CommandParser {
     }
 
     public Pair<Integer, Integer> parseSeeds(String input) throws SeedNotFoundException {
-        if (!input.matches(REGEX_NUMBERS)) throw new SeedNotFoundException();
+        if (!input.matches(REGEX_SEEDS)) throw new SeedNotFoundException();
         if (!input.contains(SEED_SEPARATOR)) throw new SeedNotFoundException();
         var seeds = input.split(SEED_SEPARATOR);
-        return new Pair<>(Integer.parseInt(seeds[0]), Integer.parseInt(seeds[1]));
+        if (seeds.length > 2) throw new SeedNotFoundException();
+        try {
+            return new Pair<>(Integer.parseInt(seeds[0]), Integer.parseInt(seeds[1]));
+        }catch (NumberFormatException e) {
+            throw new SeedNotFoundException();
+        }
     }
 
     @Override
     public int parseNumber(String input, int maxNumber) throws GameQuitException {
         checkQuitParser(input);
-        if (!input.matches(SEED)) return 0;
-        var number = Integer.parseInt(input);
+        if (!input.matches(NUMBER)) return 0;
+        int number;
+        try {
+            number = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
         if (number <= 0 || number > maxNumber) return 0;
         return number;
     }
@@ -63,8 +74,13 @@ public class CommandParserExecute implements CommandParser {
     @Override
     public int[] parseNumbers(String input, int maxNumber, int amountOfNumbers) throws GameQuitException {
         checkQuitParser(input);
-        if (!input.matches(REGEX_NUMBERS)) return new int[0];
-        int[] numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
+        if (!input.matches(REGEX_NUMBERS)) return null;
+        int[] numbers;
+        try {
+           numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
+        } catch (NumberFormatException e) {
+            return null;
+        }
         if (numbers.length != amountOfNumbers || duplicates(numbers) || notInRange(numbers, maxNumber)) return null;
         return numbers;
     }
@@ -72,9 +88,14 @@ public class CommandParserExecute implements CommandParser {
     @Override
     public int[] parseHealNumbers(String input, int maxNumber, int amountOfMaxNumbers) throws GameQuitException {
         checkQuitParser(input);
-        if (input.isEmpty()) return new int[0];
+        if (input.isEmpty() || input.equals(ENTER)) return new int[0];
         if (!input.matches(REGEX_NUMBERS)) return null;
-        int[] numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
+        int[] numbers;
+        try {
+            numbers = Arrays.stream(input.split(SEED_SEPARATOR)).mapToInt(Integer::parseInt).toArray();
+        }catch (NumberFormatException e) {
+            return null;
+        }
         if (numbers.length > amountOfMaxNumbers || duplicates(numbers) || notInRange(numbers, maxNumber)) return null;
         return numbers;
     }

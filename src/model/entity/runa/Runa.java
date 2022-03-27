@@ -158,6 +158,7 @@ public class Runa {
 
     public void reduceFocusPoints(FocusPoints focusPoints) {
         this.focusPoints.setFocusPoints(getFocusPoints().getFocusPoints() - focusPoints.getFocusPoints());
+        if (this.focusPoints.getFocusPoints() == 0) this.focusPoints.setFocusPoints(1);
     }
 
     public void addCard(Ability card) {
